@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Map — French Game</title>
+  <meta name="description" content="Mapa técnico interativo mostrando todas as tecnologias da aplicação French Game">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Grain overlay -->
+  <div class="grain"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <span class="logo-mark">⬡</span>
+        <span>TECH<em>MAP</em></span>
+      </div>
+      <nav class="header-nav">
+        <a class="nav-link" data-section="#map-section">Mapa</a>
+        <a class="nav-link" data-section="#layers-section">Camadas</a>
+        <a class="nav-link" data-section="#flow-section">Fluxo</a>
+        <a class="nav-link" data-section="#overview-section">Visão Geral</a>
+        <button class="back-btn" onclick="history.back()">← Voltar</button>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">☰</button>
+    </div>
+    <nav class="mobile-nav" id="mobileNav">
+      <a class="nav-link" data-section="#map-section">Mapa</a>
+      <a class="nav-link" data-section="#layers-section">Camadas</a>
+      <a class="nav-link" data-section="#flow-section">Fluxo</a>
+      <a class="nav-link" data-section="#overview-section">Visão Geral</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">French Game · Arquitetura v1.0</div>
+      <h1>Stack Técnica<br><em>Completa</em></h1>
+      <p>Explore todas as tecnologias, como se integram e o fluxo de dados da aplicação</p>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-num" data-target="25">0</span><span>+</span>
+          <small>Tecnologias</small>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="4">0</span>
+          <small>Camadas</small>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="5">0</span><span>+</span>
+          <small>APIs Externas</small>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="100">0</span><span>%</span>
+          <small>TypeScript</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Controls -->
+    <div class="controls" id="controls">
+      <button class="control-btn active" data-category="all">Todas</button>
+      <button class="control-btn" data-category="Frontend">
+        <span class="dot" style="background:#4f8ef7"></span>Frontend
+      </button>
+      <button class="control-btn" data-category="Backend">
+        <span class="dot" style="background:#2ecf8c"></span>Backend
+      </button>
+      <button class="control-btn" data-category="Database">
+        <span class="dot" style="background:#a78bfa"></span>Database
+      </button>
+      <button class="control-btn" data-category="External API">
+        <span class="dot" style="background:#f59e0b"></span>APIs Externas
+      </button>
+      <button class="control-btn" data-category="DevOps">
+        <span class="dot" style="background:#f87171"></span>DevOps
+      </button>
+    </div>
+
+    <!-- Map Section -->
+    <section id="map-section" class="section-wrapper">
+      <div class="section-label">01 · Mapa Interativo</div>
+      <div class="map-grid">
+        <div class="canvas-card">
+          <div class="canvas-toolbar">
+            <span class="toolbar-hint">💡 Arraste · Scroll = zoom · Clique = detalhes</span>
+            <button class="reset-btn" id="resetBtn">↺ Resetar</button>
+          </div>
+          <canvas id="techCanvas"></canvas>
+        </div>
+
+        <div class="info-panel" id="infoPanel">
+          <div class="info-empty">
+            <div class="info-empty-icon">◎</div>
+            <p>Clique em um nó no mapa para ver os detalhes da tecnologia</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Layers Section -->
+    <section id="layers-section" class="section-wrapper">
+      <div class="section-label">02 · Camadas</div>
+      <h2 class="section-title">Arquitetura em Camadas</h2>
+      <p class="section-sub">Cada camada tem responsabilidades claras e se comunica com as adjacentes</p>
+      <div class="layers-grid" id="layersGrid"></div>
+    </section>
+
+    <!-- Data Flow Section -->
+    <section id="flow-section" class="section-wrapper">
+      <div class="section-label">03 · Fluxo de Dados</div>
+      <h2 class="section-title">Como os Dados Fluem</h2>
+      <p class="section-sub">O caminho dos dados entre os diferentes componentes e serviços</p>
+      <div class="flow-items" id="flowItems"></div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview-section" class="section-wrapper">
+      <div class="section-label">04 · Visão Geral</div>
+      <h2 class="section-title">Sobre a Arquitetura</h2>
+      <div class="overview-grid">
+        <div class="overview-card" style="--card-accent: #4f8ef7">
+          <div class="overview-icon">🎨</div>
+          <h3>Frontend</h3>
+          <p>
+            Construído com <strong>React + Next.js 15</strong>, com animações via <strong>Framer Motion</strong>
+            e estilização utilitária com <strong>TailwindCSS 4</strong>. Gráficos com <strong>Recharts</strong>,
+            PWA via <strong>next-pwa</strong> e Socket.io para real-time.
+          </p>
+        </div>
+
+        <div class="overview-card" style="--card-accent: #2ecf8c">
+          <div class="overview-icon">⚙️</div>
+          <h3>Backend</h3>
+          <p>
+            Servidor <strong>Node.js</strong> com <strong>Next.js API Routes</strong>. Autenticação via
+            <strong>NextAuth.js</strong> com OAuth Google. Banco de dados <strong>MongoDB</strong> acessado
+            por <strong>Mongoose</strong> e <strong>Prisma</strong>.
+          </p>
+        </div>
+
+        <div class="overview-card" style="--card-accent: #f59e0b">
+          <div class="overview-icon">🌐</div>
+          <h3>Integrações</h3>
+          <p>
+            <strong>YouTube API</strong> para vídeos educativos, <strong>Freesound</strong> para efeitos sonoros,
+            <strong>Cloudinary</strong> para imagens e <strong>Google OAuth</strong> para autenticação.
+          </p>
+        </div>
+
+        <div class="overview-card" style="--card-accent: #f87171">
+          <div class="overview-icon">🚀</div>
+          <h3>DevOps</h3>
+          <p>
+            Deploy na <strong>Vercel</strong> com CI/CD automático e edge functions.
+            <strong>Docker</strong> para containerização e consistência entre ambientes.
+          </p>
+        </div>
+      </div>
+
+      <div class="integrations-box">
+        <h3>Principais Integrações</h3>
+        <ul class="integration-list">
+          <li><span class="check">✓</span><strong>Frontend ↔ Backend</strong> — HTTP (Fetch API) + WebSocket (Socket.io)</li>
+          <li><span class="check">✓</span><strong>Backend ↔ Database</strong> — Mongoose ODM + Prisma ORM</li>
+          <li><span class="check">✓</span><strong>Backend ↔ APIs Externas</strong> — Axios / Node-fetch</li>
+          <li><span class="check">✓</span><strong>Autenticação</strong> — NextAuth.js com OAuth Google</li>
+          <li><span class="check">✓</span><strong>Real-time</strong> — Socket.io para atualizações ao vivo</li>
+          <li><span class="check">✓</span><strong>Imagens</strong> — Cloudinary CDN com otimização automática</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Legend -->
+    <section class="section-wrapper legend-section">
+      <div class="legend-grid">
+        <div class="legend-item"><span class="legend-dot" style="background:#4f8ef7"></span>Frontend</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#2ecf8c"></span>Backend</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#a78bfa"></span>Database</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span>APIs Externas</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#f87171"></span>DevOps</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="logo-mark">⬡</span>
+      <p>Tech Map · Visualização interativa da arquitetura <strong>French Game</strong></p>
+    </div>
+  </footer>
+
+  <script src="js/index.js"></script>
+</body>
+</html>
