@@ -123,20 +123,20 @@ class LanguageManager {
   }
 
   getDataFlowInfo(flow) {
-    const translations = this.data.dataFlow[this.currentLanguage] || [];
+    const translations = this.allData.dataFlow[this.currentLanguage] || [];
     const translated = translations.find(f => f.from === flow.from);
     return translated || flow;
   }
 
   getCategoryName(categoryId) {
-    const categories = this.data.categories[this.currentLanguage] || [];
+    const categories = this.allData.categories[this.currentLanguage] || [];
     return categories.find(cat => cat === categoryId) || categoryId;
   }
 
   getUIString(path) {
     // Get nested string from UI translations (e.g., "hero.title")
     const keys = path.split('.');
-    let value = this.data.ui[this.currentLanguage];
+    let value = this.allData.ui[this.currentLanguage];
     for (const key of keys) {
       value = value?.[key];
     }
