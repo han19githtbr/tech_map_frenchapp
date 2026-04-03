@@ -70,11 +70,16 @@ class LanguageManager {
   }
 
   setData(data) {
+    console.log('[setData] Dados recebidos no LanguageManager');
     this.data = data;
     this.uiStrings = data.ui[this.currentLanguage];
+    console.log(`[setData] uiStrings setado para o idioma: ${this.currentLanguage}`);
+    console.log('[setData] this.uiStrings:', this.uiStrings);
+    
     // Se houve troca de idioma antes dos dados carregarem, aplica agora
     if (this._pendingLanguageApply) {
       this._pendingLanguageApply = false;
+      console.log('[setData] Aplicando tradução pendente');
       this.applyLanguage();
     }
   }
@@ -138,6 +143,16 @@ class LanguageManager {
   applyLanguage() {
     // Atualizar strings de UI para o idioma selecionado
     this.uiStrings = this.data.ui[this.currentLanguage] || this.data.ui['pt'];
+    
+    console.log(`[applyLanguage] Traduzindo para: ${this.currentLanguage}`);
+    console.log(`[applyLanguage] this.data.ui disponível:`, this.data.ui);
+    console.log(`[applyLanguage] this.uiStrings:`, this.uiStrings);
+
+    // Se não conseguir encontrar as strings, interromper
+    if (!this.uiStrings) {
+      console.error('[applyLanguage] ERRO: uiStrings não encontrado!');
+      return;
+    }
 
     // Traduzir header/navigation
     this.translateHeader();
@@ -162,9 +177,12 @@ class LanguageManager {
 
     // Atualizar nomes de tecnologias visíveis
     this.updateTechCards();
+    
+    console.log(`[applyLanguage] Tradução completa para: ${this.currentLanguage}`);
   }
 
   translateHeader() {
+    console.log('[translateHeader] Iniciando tradução do header...');
     // Traduzir links de navegação
     const sectionKeyMap = {
       '#map-section': 'mapa',
@@ -176,16 +194,20 @@ class LanguageManager {
     document.querySelectorAll('.nav-link').forEach(link => {
       const section = link.dataset.section;
       const key = sectionKeyMap[section];
-      if (key && this.uiStrings.header[key]) {
-        link.textContent = this.uiStrings.header[key];
+      if (key && this.uiStrings?.header[key]) {
+        const newText = this.uiStrings.header[key];
+        console.log(`[translateHeader] Traduzindo ${section} para: ${newText}`);
+        link.textContent = newText;
       }
     });
 
     // Traduzir botão voltar
     const backBtn = document.querySelector('.back-btn');
-    if (backBtn) {
+    if (backBtn && this.uiStrings?.header.voltar) {
+      console.log(`[translateHeader] Traduzindo botão voltar para: ${this.uiStrings.header.voltar}`);
       backBtn.textContent = this.uiStrings.header.voltar;
     }
+    console.log('[translateHeader] Tradução do header concluída');
   }
 
   translateHero() {
