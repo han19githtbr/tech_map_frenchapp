@@ -1,37 +1,554 @@
 {
+  "languages": ["pt", "en", "fr"],
+  "defaultLanguage": "pt",
+  "categories": {
+    "pt": ["Frontend", "Backend", "Database", "External API", "DevOps"],
+    "en": ["Frontend", "Backend", "Database", "External API", "DevOps"],
+    "fr": ["Frontend", "Backend", "Base de données", "API Externe", "DevOps"]
+  },
   "technologies": [
-        { "id": "nextjs", "name": "Next.js", "category": "Frontend", "version": "15.2.4", "description": "Framework React com SSR (Server-Side Rendering - renderização no servidor), SSG (Static Site Generation - geração estática) e API Routes (funções serverless) integradas. Responsável pela renderização de páginas, roteamento automático baseado em arquivos, otimização de imagens, e execução de chamadas de API. Oferece PWA (Progressive Web App) para experiência app-like.", "features": ["SSR/SSG", "API Routes", "File Routing", "Image Optimization", "PWA"], "color": "#e2e8f0", "icon": "▲", "connects": ["react", "typescript", "tailwind", "vercel"] },
-        { "id": "react", "name": "React 18", "category": "Frontend", "version": "18.2.0", "description": "Biblioteca JavaScript para construir interfaces de usuário reativas com componentes reutilizáveis. Gerencia estado da aplicação, renderização eficiente com Virtual DOM (representação em memória da UI), e oferece Hooks para lógica funcional. Implementa atualizações automáticas quando dados mudam.", "features": ["Components", "Hooks", "State", "Virtual DOM"], "color": "#4f8ef7", "icon": "⚛", "connects": ["nextjs", "typescript", "framer", "recharts"] },
-        { "id": "typescript", "name": "TypeScript", "category": "Frontend", "version": "5.8.3", "description": "Superset tipado de JavaScript que adiciona verificação de tipos em tempo de desenvolvimento. Oferece type safety (segurança de tipos), interfaces reutilizáveis, generics para componentes flexíveis e compilador que transforma código TypeScript em JavaScript compatível. Reduz bugs e melhora a manutenibilidade do código.", "features": ["Type Safety", "Interfaces", "Generics", "Compiler"], "color": "#5b8dee", "icon": "T", "connects": ["nextjs", "node"] },
-        { "id": "tailwind", "name": "TailwindCSS", "category": "Frontend", "version": "4.1.3", "description": "Framework CSS com abordagem utility-first que fornece classes pré-definidas prontas para uso. Permite criar designs responsivos sem escrever CSS customizado, com suporte nativo para dark mode, temas personalizados, e breakpoints responsivos. Reduz tempo de desenvolvimento e melhora consistência visual.", "features": ["Utility-First", "Responsive", "Dark Mode", "Custom"], "color": "#38bdf8", "icon": "◈", "connects": ["nextjs"] },
-        { "id": "framer", "name": "Framer Motion", "category": "Frontend", "version": "12.11.3", "description": "Biblioteca de animação para React que simplifica criação de animações suaves, transições e interações. Oferece animações declarativas, detecção de gestos (swipe, hover), layout animations e variants reutilizáveis. Essencial para criar experiências de usuário fluidas e modernas.", "features": ["Animations", "Gestures", "Layout", "Variants"], "color": "#7c3aed", "icon": "◉", "connects": ["react"] },
-        { "id": "recharts", "name": "Recharts", "category": "Frontend", "version": "2.15.2", "description": "Biblioteca de gráficos compostos para React que permite visualições de dados responsivas. Oferece múltiplos tipos de gráficos (linha, barra, pizza), animações automáticas, temas customizáveis, e integração perfeita com React. Ideal para dashboards e análises de dados de jogadores.", "features": ["Charts", "Responsive", "Animations", "Themes"], "color": "#f59e0b", "icon": "◊", "connects": ["react"] },
-        { "id": "toastify", "name": "React Toastify", "category": "Frontend", "version": "11.0.5", "description": "Biblioteca para exibir notificações toast (pequenas mensagens flutuantes) na aplicação. Oferece tipos pré-definidos (sucesso, erro, aviso, informação), animações automáticas, posicionamento flexível e customização completa. Melhora feedback visual para ações do usuário.", "features": ["Notifications", "Animations", "Positioning", "Customizable"], "color": "#f97316", "icon": "◐", "connects": ["react"] },
-        { "id": "pwa", "name": "PWA (next-pwa)", "category": "Frontend", "version": "5.6.0", "description": "Progressive Web App (aplicação web progressiva) permite usar a aplicação como um app nativo. Utiliza Service Workers para cache offline, funciona sem conexão internet, pode ser instalada na home screen e suporta push notifications. Combina o melhor da web com apps nativos.", "features": ["Service Workers", "Offline", "Installable", "Push"], "color": "#a78bfa", "icon": "◻", "connects": ["nextjs"] },
-        { "id": "socketio-client", "name": "Socket.io Client", "category": "Frontend", "version": "4.8.1", "description": "Cliente Socket.io que estabelece comunicação bidirectional em tempo real com o servidor via WebSocket. Permite troca de eventos instantânea, reconexão automática em caso de desconexão, fallback para outras tecnologias se necessário. Essencial para funcionalidades live do jogo.", "features": ["Real-time", "WebSocket", "Reconnect", "Events"], "color": "#34d399", "icon": "⟶", "connects": ["nextjs", "socketio"] },
-        { "id": "node", "name": "Node.js", "category": "Backend", "version": "Runtime", "description": "Runtime JavaScript que executa código no servidor. Oferece event loop não-bloqueante, suporte nativo a async/await para operações assíncronas, sistema de módulos poderoso e streams para processamento de dados. Base de toda a infraestrutura backend da aplicação.", "features": ["Event Loop", "Async/Await", "Modules", "Streams"], "color": "#6ed97a", "icon": "⬡", "connects": ["nextjs", "typescript"] },
-        { "id": "nextauth", "name": "NextAuth.js", "category": "Backend", "version": "4.24.11", "description": "Solução de autenticação para Next.js que gerencia login de usuários. Suporta OAuth (autenticação via Google, GitHub, etc), JWT (JSON Web Tokens - tokens seguros para sessões), gerenciamento de sessões e cookies automático, e callbacks customizáveis para controle fino. Simplifica segurança de autenticação.", "features": ["OAuth", "JWT", "Sessions", "Callbacks"], "color": "#22d3ee", "icon": "◍", "connects": ["nextjs", "mongodb"] },
-        { "id": "mongoose", "name": "Mongoose", "category": "Backend", "version": "8.14.2", "description": "ODM (Object Document Mapping) para MongoDB que fornece camada abstrata sobre o banco de dados. Define schemas (estrutura dos documentos), valida dados automaticamente antes de salvar, oferece middleware hooks para operações, e simplifica queries complexas. Garante integridade dos dados.", "features": ["ODM", "Schema", "Validation", "Middleware"], "color": "#f87171", "icon": "◬", "connects": ["mongodb", "nextjs"] },
-        { "id": "prisma", "name": "Prisma ORM", "category": "Backend", "version": "6.8.0", "description": "ORM (Object-Relational Mapping) moderno e type-safe para acesso a banco de dados. Define modelos de dados, oferece query builder intuitivo, gerencia migrations automáticas, gera tipos TypeScript automaticamente, e fornece cliente Prisma com intellisense completo. Melhora produtividade e segurança.", "features": ["ORM", "Query Builder", "Migrations", "Type Safety"], "color": "#94a3b8", "icon": "▣", "connects": ["mongodb", "typescript"] },
-        { "id": "socketio", "name": "Socket.io Server", "category": "Backend", "version": "4.8.1", "description": "Servidor Socket.io que estabelece conexões WebSocket para comunicação em tempo real e bidirecional. Suporta rooms (agrupamento de clientes), broadcasting (envio para múltiplos clientes), fallback automático para outras tecnologias, e event-driven architecture. Essencial para multiplayer e atualizações live.", "features": ["Real-time", "WebSocket", "Fallback", "Rooms"], "color": "#2ecf8c", "icon": "⟵", "connects": ["nextjs", "node"] },
-        { "id": "mongodb", "name": "MongoDB", "category": "Database", "version": "6.16.0", "description": "Banco de dados NoSQL (Not Only SQL) que armazena dados em documentos JSON flexíveis. Suporta queries complexas, índices TTL (Time To Live) para expiração automática de dados, transações ACID, e escalabilidade horizontal. Escolha ideal para aplicações modernas com esquemas variáveis.", "features": ["NoSQL", "Documents", "TTL Indexes", "Transactions"], "color": "#a78bfa", "icon": "◈", "connects": ["mongoose", "prisma", "nextauth"] },
-        { "id": "youtube", "name": "YouTube API", "category": "External API", "version": "v3", "description": "API do Google que permite buscar e recuperar informações de vídeos do YouTube. Oferece pesquisa por palavras-chave, detalhes de vídeos, lista de trending, e metadados completos. Integra conteúdo educativo de francês diretamente na plataforma de aprendizado.", "features": ["Search", "Video Details", "Trending", "Metadata"], "color": "#f87171", "icon": "▶", "connects": ["nextjs"] },
-        { "id": "cloudinary", "name": "Cloudinary", "category": "External API", "version": "6.16.0", "description": "Serviço cloud para gerenciamento de imagens e mídia. Oferece upload de arquivos, otimização automática, armazenamento em CDN (Content Delivery Network - rede global de distribuição), transformações em tempo real (resize, crop, filtros), e aceleração de entrega. Melhora performance e experiência do usuário.", "features": ["Upload", "CDN", "Optimization", "Transforms"], "color": "#60a5fa", "icon": "☁", "connects": ["nextjs"] },
-        { "id": "freesound", "name": "Freesound API", "category": "External API", "version": "Custom", "description": "API de banco de dados de efeitos sonoros que permite buscar e baixar áudios licenciados. Oferece busca por palavras-chave, pré-visualização de áudio, metadados de qualidade, e licenças claras. Enriquece a experiência do jogo com sons de animais, ambientes e eventos interativos.", "features": ["Sound Search", "Caching", "TTL Index", "Preview"], "color": "#fb923c", "icon": "♪", "connects": ["nextjs", "mongodb"] },
-        { "id": "vercel", "name": "Vercel", "category": "DevOps", "version": "Cloud Platform", "description": "Plataforma cloud para deploy de aplicações Next.js. Oferece CI/CD automático (Continuous Integration/Continuous Deployment - integração contínua e deploy contínuo), edge functions para lógica distribuída globalmente, escalabilidade automática, analytics de performance, e preview deployments. Otimizada para Next.js com zero config.", "features": ["Deployment", "CI/CD", "Scalability", "Analytics"], "color": "#e2e8f0", "icon": "▲", "connects": ["nextjs"] },
-        { "id": "docker", "name": "Docker", "category": "DevOps", "version": "Containerization", "description": "Plataforma de containerização que empacota aplicação, dependências e configurações em containers isolados. Oferece consistência de ambiente entre desenvolvimento, testes e produção, facilita CI/CD pipelines, permite orquestração com Kubernetes, e simplifica deploy em múltiplos ambientes. Container é uma imagem portável e executável.", "features": ["Containers", "Images", "Networking", "Volumes"], "color": "#38bdf8", "icon": "⬢", "connects": ["nextjs"] }
+    {
+      "id": "nextjs",
+      "category": "Frontend",
+      "version": "15.2.4",
+      "icon": "▲",
+      "color": "#e2e8f0",
+      "connects": ["react", "typescript", "tailwind", "vercel"],
+      "translations": {
+        "pt": {
+          "name": "Next.js",
+          "description": "Framework React com SSR (Server-Side Rendering - renderização no servidor), SSG (Static Site Generation - geração estática) e API Routes (funções serverless) integradas. Responsável pela renderização de páginas, roteamento automático baseado em arquivos, otimização de imagens, e execução de chamadas de API. Oferece PWA (Progressive Web App) para experiência app-like.",
+          "features": ["SSR/SSG", "API Routes", "Roteamento Automático", "Otimização de Imagem", "PWA"]
+        },
+        "en": {
+          "name": "Next.js",
+          "description": "React framework with integrated SSR (Server-Side Rendering), SSG (Static Site Generation), and API Routes (serverless functions). Responsible for page rendering, automatic file-based routing, image optimization, and API calls. Offers PWA (Progressive Web App) for platform-like experience.",
+          "features": ["SSR/SSG", "API Routes", "File Routing", "Image Optimization", "PWA"]
+        },
+        "fr": {
+          "name": "Next.js",
+          "description": "Framework React avec SSR (Server-Side Rendering - rendu côté serveur), SSG (Static Site Generation - génération statique) et API Routes (fonctions serverless) intégrées. Responsable du rendu des pages, du routage automatique basé sur les fichiers, de l'optimisation des images et de l'exécution des appels API. Offre PWA (Progressive Web App) pour une expérience de type application.",
+          "features": ["SSR/SSG", "API Routes", "Routage Automatique", "Optimisation d'Image", "PWA"]
+        }
+      }
+    },
+    {
+      "id": "react",
+      "category": "Frontend",
+      "version": "18.2.0",
+      "icon": "⚛",
+      "color": "#4f8ef7",
+      "connects": ["nextjs", "typescript", "framer", "recharts"],
+      "translations": {
+        "pt": {
+          "name": "React 18",
+          "description": "Biblioteca JavaScript para construir interfaces de usuário reativas com componentes reutilizáveis. Gerencia estado da aplicação, renderização eficiente com Virtual DOM (representação em memória da UI), e oferece Hooks para lógica funcional. Implementa atualizações automáticas quando dados mudam.",
+          "features": ["Componentes", "Hooks", "Estado", "Virtual DOM"]
+        },
+        "en": {
+          "name": "React 18",
+          "description": "JavaScript library for building reactive user interfaces with reusable components. Manages application state, efficient rendering with Virtual DOM (in-memory UI representation), and provides Hooks for functional logic. Implements automatic updates when data changes.",
+          "features": ["Components", "Hooks", "State", "Virtual DOM"]
+        },
+        "fr": {
+          "name": "React 18",
+          "description": "Bibliothèque JavaScript pour construire des interfaces utilisateur réactives avec des composants réutilisables. Gère l'état de l'application, le rendu efficace avec le Virtual DOM (représentation en mémoire de l'interface utilisateur), et fournit des Hooks pour la logique fonctionnelle. Implémente les mises à jour automatiques lorsque les données changent.",
+          "features": ["Composants", "Hooks", "État", "Virtual DOM"]
+        }
+      }
+    },
+    {
+      "id": "typescript",
+      "category": "Frontend",
+      "version": "5.8.3",
+      "icon": "T",
+      "color": "#5b8dee",
+      "connects": ["nextjs", "node"],
+      "translations": {
+        "pt": {
+          "name": "TypeScript",
+          "description": "Superset tipado de JavaScript que adiciona verificação de tipos em tempo de desenvolvimento. Oferece type safety (segurança de tipos), interfaces reutilizáveis, generics para componentes flexíveis e compilador que transforma código TypeScript em JavaScript compatível. Reduz bugs e melhora a manutenibilidade do código.",
+          "features": ["Segurança de Tipos", "Interfaces", "Genéricos", "Compilador"]
+        },
+        "en": {
+          "name": "TypeScript",
+          "description": "Typed superset of JavaScript that adds type checking at development time. Offers type safety, reusable interfaces, generics for flexible components, and a compiler that transforms TypeScript code into compatible JavaScript. Reduces bugs and improves code maintainability.",
+          "features": ["Type Safety", "Interfaces", "Generics", "Compiler"]
+        },
+        "fr": {
+          "name": "TypeScript",
+          "description": "Sur-ensemble typé de JavaScript qui ajoute la vérification des types au moment du développement. Offre une sécurité des types, des interfaces réutilisables, des génériques pour des composants flexibles et un compilateur qui transforme le code TypeScript en JavaScript compatible. Réduit les bogues et améliore la maintenabilité du code.",
+          "features": ["Sécurité des Types", "Interfaces", "Génériques", "Compilateur"]
+        }
+      }
+    },
+    {
+      "id": "tailwind",
+      "category": "Frontend",
+      "version": "4.1.3",
+      "icon": "◈",
+      "color": "#38bdf8",
+      "connects": ["nextjs"],
+      "translations": {
+        "pt": {
+          "name": "TailwindCSS",
+          "description": "Framework CSS com abordagem utility-first que fornece classes pré-definidas prontas para uso. Permite criar designs responsivos sem escrever CSS customizado, com suporte nativo para dark mode, temas personalizados, e breakpoints responsivos. Reduz tempo de desenvolvimento e melhora consistência visual.",
+          "features": ["Utility-First", "Responsivo", "Dark Mode", "Customizável"]
+        },
+        "en": {
+          "name": "TailwindCSS",
+          "description": "CSS framework with a utility-first approach that provides pre-defined classes ready to use. Allows creating responsive designs without custom CSS, with native support for dark mode, custom themes, and responsive breakpoints. Reduces development time and improves visual consistency.",
+          "features": ["Utility-First", "Responsive", "Dark Mode", "Custom"]
+        },
+        "fr": {
+          "name": "TailwindCSS",
+          "description": "Framework CSS avec une approche utility-first qui fournit des classes prédéfinies prêtes à l'emploi. Permet de créer des designs responsifs sans CSS personnalisé, avec support natif du mode sombre, des thèmes personnalisés et des points d'arrêt réactifs. Réduit le temps de développement et améliore la cohérence visuelle.",
+          "features": ["Utility-First", "Réactif", "Mode Sombre", "Personnalisé"]
+        }
+      }
+    },
+    {
+      "id": "framer",
+      "category": "Frontend",
+      "version": "12.11.3",
+      "icon": "◉",
+      "color": "#7c3aed",
+      "connects": ["react"],
+      "translations": {
+        "pt": {
+          "name": "Framer Motion",
+          "description": "Biblioteca de animação para React que simplifica criação de animações suaves, transições e interações. Oferece animações declarativas, detecção de gestos (swipe, hover), layout animations e variants reutilizáveis. Essencial para criar experiências de usuário fluidas e modernas.",
+          "features": ["Animações", "Gestos", "Layout", "Variantes"]
+        },
+        "en": {
+          "name": "Framer Motion",
+          "description": "React animation library that simplifies creating smooth animations, transitions, and interactions. Offers declarative animations, gesture detection (swipe, hover), layout animations, and reusable variants. Essential for creating smooth and modern user experiences.",
+          "features": ["Animations", "Gestures", "Layout", "Variants"]
+        },
+        "fr": {
+          "name": "Framer Motion",
+          "description": "Bibliothèque d'animation React qui simplifie la création d'animations fluides, de transitions et d'interactions. Offre des animations déclaratives, la détection de gestes (swipe, hover), des animations de mise en page et des variantes réutilisables. Essentiel pour créer des expériences utilisateur fluides et modernes.",
+          "features": ["Animations", "Gestes", "Mise en Page", "Variantes"]
+        }
+      }
+    },
+    {
+      "id": "recharts",
+      "category": "Frontend",
+      "version": "2.15.2",
+      "icon": "◊",
+      "color": "#f59e0b",
+      "connects": ["react"],
+      "translations": {
+        "pt": {
+          "name": "Recharts",
+          "description": "Biblioteca de gráficos compostos para React que permite visualições de dados responsivas. Oferece múltiplos tipos de gráficos (linha, barra, pizza), animações automáticas, temas customizáveis, e integração perfeita com React. Ideal para dashboards e análises de dados de jogadores.",
+          "features": ["Gráficos", "Responsivo", "Animações", "Temas"]
+        },
+        "en": {
+          "name": "Recharts",
+          "description": "Composed charting library for React that enables responsive data visualizations. Offers multiple chart types (line, bar, pie), automatic animations, customizable themes, and perfect React integration. Ideal for dashboards and player data analysis.",
+          "features": ["Charts", "Responsive", "Animations", "Themes"]
+        },
+        "fr": {
+          "name": "Recharts",
+          "description": "Bibliothèque de graphiques composés pour React qui permet les visualisations de données réactives. Offre plusieurs types de graphiques (ligne, barre, camembert), des animations automatiques, des thèmes personnalisables et une intégration parfaite avec React. Idéal pour les tableaux de bord et l'analyse des données des joueurs.",
+          "features": ["Graphiques", "Réactif", "Animations", "Thèmes"]
+        }
+      }
+    },
+    {
+      "id": "toastify",
+      "category": "Frontend",
+      "version": "11.0.5",
+      "icon": "◐",
+      "color": "#f97316",
+      "connects": ["react"],
+      "translations": {
+        "pt": {
+          "name": "React Toastify",
+          "description": "Biblioteca para exibir notificações toast (pequenas mensagens flutuantes) na aplicação. Oferece tipos pré-definidos (sucesso, erro, aviso, informação), animações automáticas, posicionamento flexível e customização completa. Melhora feedback visual para ações do usuário.",
+          "features": ["Notificações", "Animações", "Posicionamento", "Customizável"]
+        },
+        "en": {
+          "name": "React Toastify",
+          "description": "Library for displaying toast notifications (small floating messages) in the application. Offers predefined types (success, error, warning, info), automatic animations, flexible positioning, and full customization. Improves visual feedback for user actions.",
+          "features": ["Notifications", "Animations", "Positioning", "Customizable"]
+        },
+        "fr": {
+          "name": "React Toastify",
+          "description": "Bibliothèque pour afficher des notifications toast (petits messages flottants) dans l'application. Offre des types prédéfinis (succès, erreur, avertissement, information), des animations automatiques, un positionnement flexible et une personnalisation complète. Améliore les commentaires visuels pour les actions des utilisateurs.",
+          "features": ["Notifications", "Animations", "Positionnement", "Personnalisable"]
+        }
+      }
+    },
+    {
+      "id": "pwa",
+      "category": "Frontend",
+      "version": "5.6.0",
+      "icon": "◻",
+      "color": "#a78bfa",
+      "connects": ["nextjs"],
+      "translations": {
+        "pt": {
+          "name": "PWA (next-pwa)",
+          "description": "Progressive Web App (aplicação web progressiva) permite usar a aplicação como um app nativo. Utiliza Service Workers para cache offline, funciona sem conexão internet, pode ser instalada na home screen e suporta push notifications. Combina o melhor da web com apps nativos.",
+          "features": ["Service Workers", "Offline", "Instalável", "Push"]
+        },
+        "en": {
+          "name": "PWA (next-pwa)",
+          "description": "Progressive Web App allows using the application as a native app. Uses Service Workers for offline caching, works without internet connection, can be installed on home screen, and supports push notifications. Combines the best of web with native apps.",
+          "features": ["Service Workers", "Offline", "Installable", "Push"]
+        },
+        "fr": {
+          "name": "PWA (next-pwa)",
+          "description": "Application Web Progressive (application web progressive) permet d'utiliser l'application comme une application native. Utilise Service Workers pour la mise en cache hors ligne, fonctionne sans connexion internet, peut être installée sur l'écran d'accueil et supporte les notifications push. Combine le meilleur du web avec les applications natives.",
+          "features": ["Service Workers", "Hors Ligne", "Installable", "Push"]
+        }
+      }
+    },
+    {
+      "id": "socketio-client",
+      "category": "Frontend",
+      "version": "4.8.1",
+      "icon": "⟶",
+      "color": "#34d399",
+      "connects": ["nextjs", "socketio"],
+      "translations": {
+        "pt": {
+          "name": "Socket.io Client",
+          "description": "Cliente Socket.io que estabelece comunicação bidirectional em tempo real com o servidor via WebSocket. Permite troca de eventos instantânea, reconexão automática em caso de desconexão, fallback para outras tecnologias se necessário. Essencial para funcionalidades live do jogo.",
+          "features": ["Tempo Real", "WebSocket", "Reconexão", "Eventos"]
+        },
+        "en": {
+          "name": "Socket.io Client",
+          "description": "Socket.io client that establishes real-time bidirectional communication with the server via WebSocket. Enables instant event exchange, automatic reconnection on disconnection, fallback to other technologies if needed. Essential for live game features.",
+          "features": ["Real-time", "WebSocket", "Reconnect", "Events"]
+        },
+        "fr": {
+          "name": "Socket.io Client",
+          "description": "Client Socket.io qui établit une communication bidirectionnelle en temps réel avec le serveur via WebSocket. Permet l'échange instantané d'événements, la reconnexion automatique en cas de déconnexion, le basculement vers d'autres technologies si nécessaire. Essentiel pour les fonctionnalités de jeu en direct.",
+          "features": ["Temps Réel", "WebSocket", "Reconnexion", "Événements"]
+        }
+      }
+    },
+    {
+      "id": "node",
+      "category": "Backend",
+      "version": "Runtime",
+      "icon": "⬡",
+      "color": "#6ed97a",
+      "connects": ["nextjs", "typescript"],
+      "translations": {
+        "pt": {
+          "name": "Node.js",
+          "description": "Runtime JavaScript que executa código no servidor. Oferece event loop não-bloqueante, suporte nativo a async/await para operações assíncronas, sistema de módulos poderoso e streams para processamento de dados. Base de toda a infraestrutura backend da aplicação.",
+          "features": ["Event Loop", "Async/Await", "Módulos", "Streams"]
+        },
+        "en": {
+          "name": "Node.js",
+          "description": "JavaScript runtime that executes code on the server. Offers non-blocking event loop, native async/await support for asynchronous operations, powerful module system, and streams for data processing. Foundation of the entire backend infrastructure.",
+          "features": ["Event Loop", "Async/Await", "Modules", "Streams"]
+        },
+        "fr": {
+          "name": "Node.js",
+          "description": "Runtime JavaScript qui exécute du code sur le serveur. Offre une boucle d'événements non-bloquante, support natif pour async/await pour les opérations asynchrones, système de modules puissant et streams pour le traitement des données. Base de toute l'infrastructure backend.",
+          "features": ["Boucle d'Événements", "Async/Await", "Modules", "Streams"]
+        }
+      }
+    },
+    {
+      "id": "nextauth",
+      "category": "Backend",
+      "version": "4.24.11",
+      "icon": "◍",
+      "color": "#22d3ee",
+      "connects": ["nextjs", "mongodb"],
+      "translations": {
+        "pt": {
+          "name": "NextAuth.js",
+          "description": "Solução de autenticação para Next.js que gerencia login de usuários. Suporta OAuth (autenticação via Google, GitHub, etc), JWT (JSON Web Tokens - tokens seguros para sessões), gerenciamento de sessões e cookies automático, e callbacks customizáveis para controle fino. Simplifica segurança de autenticação.",
+          "features": ["OAuth", "JWT", "Sessões", "Callbacks"]
+        },
+        "en": {
+          "name": "NextAuth.js",
+          "description": "Authentication solution for Next.js that manages user login. Supports OAuth (authentication via Google, GitHub, etc), JWT (JSON Web Tokens - secure session tokens), automatic session and cookie management, and customizable callbacks for fine control. Simplifies authentication security.",
+          "features": ["OAuth", "JWT", "Sessions", "Callbacks"]
+        },
+        "fr": {
+          "name": "NextAuth.js",
+          "description": "Solution d'authentification pour Next.js qui gère la connexion des utilisateurs. Supporte OAuth (authentification via Google, GitHub, etc), JWT (JSON Web Tokens - tokens de session sécurisés), gestion automatique des sessions et des cookies, et callbacks personnalisés pour un contrôle fin. Simplifie la sécurité de l'authentification.",
+          "features": ["OAuth", "JWT", "Sessions", "Callbacks"]
+        }
+      }
+    },
+    {
+      "id": "mongoose",
+      "category": "Backend",
+      "version": "8.14.2",
+      "icon": "◬",
+      "color": "#f87171",
+      "connects": ["mongodb", "nextjs"],
+      "translations": {
+        "pt": {
+          "name": "Mongoose",
+          "description": "ODM (Object Document Mapping) para MongoDB que fornece camada abstrata sobre o banco de dados. Define schemas (estrutura dos documentos), valida dados automaticamente antes de salvar, oferece middleware hooks para operações, e simplifica queries complexas. Garante integridade dos dados.",
+          "features": ["ODM", "Schema", "Validação", "Middleware"]
+        },
+        "en": {
+          "name": "Mongoose",
+          "description": "ODM (Object Document Mapping) for MongoDB that provides an abstraction layer over the database. Defines schemas (document structure), automatically validates data before saving, offers middleware hooks for operations, and simplifies complex queries. Ensures data integrity.",
+          "features": ["ODM", "Schema", "Validation", "Middleware"]
+        },
+        "fr": {
+          "name": "Mongoose",
+          "description": "ODM (Object Document Mapping) pour MongoDB qui fournit une couche d'abstraction sur la base de données. Définit des schémas (structure des documents), valide automatiquement les données avant d'enregistrer, offre des hooks middleware pour les opérations et simplifie les requêtes complexes. Garantit l'intégrité des données.",
+          "features": ["ODM", "Schema", "Validation", "Middleware"]
+        }
+      }
+    },
+    {
+      "id": "prisma",
+      "category": "Backend",
+      "version": "6.8.0",
+      "icon": "▣",
+      "color": "#94a3b8",
+      "connects": ["mongodb", "typescript"],
+      "translations": {
+        "pt": {
+          "name": "Prisma ORM",
+          "description": "ORM (Object-Relational Mapping) moderno e type-safe para acesso a banco de dados. Define modelos de dados, oferece query builder intuitivo, gerencia migrations automáticas, gera tipos TypeScript automaticamente, e fornece cliente Prisma com intellisense completo. Melhora produtividade e segurança.",
+          "features": ["ORM", "Query Builder", "Migrations", "Segurança de Tipos"]
+        },
+        "en": {
+          "name": "Prisma ORM",
+          "description": "Modern and type-safe ORM (Object-Relational Mapping) for database access. Defines data models, offers an intuitive query builder, manages automatic migrations, generates TypeScript types automatically, and provides Prisma client with full intellisense. Improves productivity and security.",
+          "features": ["ORM", "Query Builder", "Migrations", "Type Safety"]
+        },
+        "fr": {
+          "name": "Prisma ORM",
+          "description": "ORM (Object-Relational Mapping) moderne et type-safe pour l'accès à la base de données. Définit des modèles de données, offre un query builder intuitif, gère les migrations automatiques, génère automatiquement les types TypeScript et fournit le client Prisma avec intellisense complet. Améliore la productivité et la sécurité.",
+          "features": ["ORM", "Query Builder", "Migrations", "Sécurité des Types"]
+        }
+      }
+    },
+    {
+      "id": "socketio",
+      "category": "Backend",
+      "version": "4.8.1",
+      "icon": "⟵",
+      "color": "#2ecf8c",
+      "connects": ["nextjs", "node"],
+      "translations": {
+        "pt": {
+          "name": "Socket.io Server",
+          "description": "Servidor Socket.io que estabelece conexões WebSocket para comunicação em tempo real e bidirecional. Suporta rooms (agrupamento de clientes), broadcasting (envio para múltiplos clientes), fallback automático para outras tecnologias, e event-driven architecture. Essencial para multiplayer e atualizações live.",
+          "features": ["Tempo Real", "WebSocket", "Fallback", "Rooms"]
+        },
+        "en": {
+          "name": "Socket.io Server",
+          "description": "Socket.io server that establishes WebSocket connections for real-time and bidirectional communication. Supports rooms (client grouping), broadcasting (sending to multiple clients), automatic fallback to other technologies, and event-driven architecture. Essential for multiplayer and live updates.",
+          "features": ["Real-time", "WebSocket", "Fallback", "Rooms"]
+        },
+        "fr": {
+          "name": "Socket.io Server",
+          "description": "Serveur Socket.io qui établit des connexions WebSocket pour la communication en temps réel et bidirectionnelle. Supporte les rooms (groupement de clients), la diffusion (envoi à plusieurs clients), le basculement automatique vers d'autres technologies et l'architecture pilotée par les événements. Essentiel pour le multijoueur et les mises à jour en direct.",
+          "features": ["Temps Réel", "WebSocket", "Fallback", "Rooms"]
+        }
+      }
+    },
+    {
+      "id": "mongodb",
+      "category": "Database",
+      "version": "6.16.0",
+      "icon": "◈",
+      "color": "#a78bfa",
+      "connects": ["mongoose", "prisma", "nextauth"],
+      "translations": {
+        "pt": {
+          "name": "MongoDB",
+          "description": "Banco de dados NoSQL (Not Only SQL) que armazena dados em documentos JSON flexíveis. Suporta queries complexas, índices TTL (Time To Live) para expiração automática de dados, transações ACID, e escalabilidade horizontal. Escolha ideal para aplicações modernas com esquemas variáveis.",
+          "features": ["NoSQL", "Documentos", "Índices TTL", "Transações"]
+        },
+        "en": {
+          "name": "MongoDB",
+          "description": "NoSQL (Not Only SQL) database that stores data in flexible JSON documents. Supports complex queries, TTL (Time To Live) indexes for automatic data expiration, ACID transactions, and horizontal scalability. Ideal choice for modern applications with variable schemas.",
+          "features": ["NoSQL", "Documents", "TTL Indexes", "Transactions"]
+        },
+        "fr": {
+          "name": "MongoDB",
+          "description": "Base de données NoSQL (Not Only SQL) qui stocke les données dans des documents JSON flexibles. Supporte les requêtes complexes, les indices TTL (Time To Live) pour l'expiration automatique des données, les transactions ACID et l'évolutivité horizontale. Choix idéal pour les applications modernes avec des schémas variables.",
+          "features": ["NoSQL", "Documents", "Indices TTL", "Transactions"]
+        }
+      }
+    },
+    {
+      "id": "youtube",
+      "category": "External API",
+      "version": "v3",
+      "icon": "▶",
+      "color": "#f87171",
+      "connects": ["nextjs"],
+      "translations": {
+        "pt": {
+          "name": "YouTube API",
+          "description": "API do Google que permite buscar e recuperar informações de vídeos do YouTube. Oferece pesquisa por palavras-chave, detalhes de vídeos, lista de trending, e metadados completos. Integra conteúdo educativo de francês diretamente na plataforma de aprendizado.",
+          "features": ["Pesquisa", "Detalhes de Vídeo", "Trending", "Metadados"]
+        },
+        "en": {
+          "name": "YouTube API",
+          "description": "Google API that allows searching and retrieving information from YouTube videos. Offers keyword search, video details, trending lists, and complete metadata. Integrates French educational content directly into the learning platform.",
+          "features": ["Search", "Video Details", "Trending", "Metadata"]
+        },
+        "fr": {
+          "name": "YouTube API",
+          "description": "API Google qui permet de rechercher et de récupérer les informations des vidéos YouTube. Offre la recherche par mots-clés, les détails des vidéos, la liste des tendances et les métadonnées complètes. Intègre le contenu éducatif français directement dans la plateforme d'apprentissage.",
+          "features": ["Recherche", "Détails de la Vidéo", "Tendances", "Métadonnées"]
+        }
+      }
+    },
+    {
+      "id": "cloudinary",
+      "category": "External API",
+      "version": "6.16.0",
+      "icon": "☁",
+      "color": "#60a5fa",
+      "connects": ["nextjs"],
+      "translations": {
+        "pt": {
+          "name": "Cloudinary",
+          "description": "Serviço cloud para gerenciamento de imagens e mídia. Oferece upload de arquivos, otimização automática, armazenamento em CDN (Content Delivery Network - rede global de distribuição), transformações em tempo real (resize, crop, filtros), e aceleração de entrega. Melhora performance e experiência do usuário.",
+          "features": ["Upload", "CDN", "Otimização", "Transformações"]
+        },
+        "en": {
+          "name": "Cloudinary",
+          "description": "Cloud service for image and media management. Offers file upload, automatic optimization, CDN storage (Content Delivery Network - global distribution network), real-time transformations (resize, crop, filters), and delivery acceleration. Improves performance and user experience.",
+          "features": ["Upload", "CDN", "Optimization", "Transforms"]
+        },
+        "fr": {
+          "name": "Cloudinary",
+          "description": "Service cloud pour la gestion des images et des médias. Offre le téléchargement de fichiers, l'optimisation automatique, le stockage CDN (Content Delivery Network - réseau de distribution mondial), les transformations en temps réel (redimensionnement, recadrage, filtres) et l'accélération de la livraison. Améliore les performances et l'expérience utilisateur.",
+          "features": ["Upload", "CDN", "Optimisation", "Transformations"]
+        }
+      }
+    },
+    {
+      "id": "freesound",
+      "category": "External API",
+      "version": "Custom",
+      "icon": "♪",
+      "color": "#fb923c",
+      "connects": ["nextjs", "mongodb"],
+      "translations": {
+        "pt": {
+          "name": "Freesound API",
+          "description": "API de banco de dados de efeitos sonoros que permite buscar e baixar áudios licenciados. Oferece busca por palavras-chave, pré-visualização de áudio, metadados de qualidade, e licenças claras. Enriquece a experiência do jogo com sons de animais, ambientes e eventos interativos.",
+          "features": ["Busca de Sons", "Cache", "Índice TTL", "Pré-visualização"]
+        },
+        "en": {
+          "name": "Freesound API",
+          "description": "Sound effects database API that allows searching and downloading licensed audio. Offers keyword search, audio preview, quality metadata, and clear licenses. Enriches the game experience with sounds of animals, environments, and interactive events.",
+          "features": ["Sound Search", "Caching", "TTL Index", "Preview"]
+        },
+        "fr": {
+          "name": "Freesound API",
+          "description": "API de base de données d'effets sonores qui permet de rechercher et télécharger des audio sous licence. Offre la recherche par mots-clés, l'aperçu audio, les métadonnées de qualité et les licences claires. Enrichit l'expérience du jeu avec des sons d'animaux, d'environnements et d'événements interactifs.",
+          "features": ["Recherche Sonore", "Mise en Cache", "Indice TTL", "Aperçu"]
+        }
+      }
+    },
+    {
+      "id": "vercel",
+      "category": "DevOps",
+      "version": "Cloud Platform",
+      "icon": "▲",
+      "color": "#e2e8f0",
+      "connects": ["nextjs"],
+      "translations": {
+        "pt": {
+          "name": "Vercel",
+          "description": "Plataforma cloud para deploy de aplicações Next.js. Oferece CI/CD automático (Continuous Integration/Continuous Deployment - integração contínua e deploy contínuo), edge functions para lógica distribuída globalmente, escalabilidade automática, analytics de performance, e preview deployments. Otimizada para Next.js com zero config.",
+          "features": ["Deploy", "CI/CD", "Escalabilidade", "Analytics"]
+        },
+        "en": {
+          "name": "Vercel",
+          "description": "Cloud platform for deploying Next.js applications. Offers automatic CI/CD (Continuous Integration/Continuous Deployment), edge functions for globally distributed logic, automatic scalability, performance analytics, and preview deployments. Optimized for Next.js with zero config.",
+          "features": ["Deployment", "CI/CD", "Scalability", "Analytics"]
+        },
+        "fr": {
+          "name": "Vercel",
+          "description": "Plateforme cloud pour le déploiement des applications Next.js. Offre CI/CD automatique (Intégration Continue/Déploiement Continu), des fonctions edge pour la logique distribuée mondialement, l'évolutivité automatique, les analyses de performance et les déploiements d'aperçu. Optimisée pour Next.js avec zéro config.",
+          "features": ["Déploiement", "CI/CD", "Scalabilité", "Analytics"]
+        }
+      }
+    },
+    {
+      "id": "docker",
+      "category": "DevOps",
+      "version": "Containerization",
+      "icon": "⬢",
+      "color": "#38bdf8",
+      "connects": ["nextjs"],
+      "translations": {
+        "pt": {
+          "name": "Docker",
+          "description": "Plataforma de containerização que empacota aplicação, dependências e configurações em containers isolados. Oferece consistência de ambiente entre desenvolvimento, testes e produção, facilita CI/CD pipelines, permite orquestração com Kubernetes, e simplifica deploy em múltiplos ambientes. Container é uma imagem portável e executável.",
+          "features": ["Containers", "Imagens", "Networking", "Volumes"]
+        },
+        "en": {
+          "name": "Docker",
+          "description": "Containerization platform that packages application, dependencies, and configurations in isolated containers. Offers environment consistency across development, testing, and production, facilitates CI/CD pipelines, enables orchestration with Kubernetes, and simplifies deployment across multiple environments. Container is a portable and executable image.",
+          "features": ["Containers", "Images", "Networking", "Volumes"]
+        },
+        "fr": {
+          "name": "Docker",
+          "description": "Plateforme de containerisation qui empaquette l'application, les dépendances et les configurations dans des conteneurs isolés. Offre la cohérence de l'environnement entre le développement, les tests et la production, facilite les pipelines CI/CD, permet l'orchestration avec Kubernetes et simplifie le déploiement sur plusieurs environnements. Un conteneur est une image portable et exécutable.",
+          "features": ["Conteneurs", "Images", "Networking", "Volumes"]
+        }
+      }
+    }
   ],
-  "layers": [
-    { "name": "Frontend", "color": "#4f8ef7", "technologies": ["nextjs", "react", "typescript", "tailwind", "framer", "recharts", "toastify", "pwa", "socketio-client"] },
-    { "name": "Backend", "color": "#2ecf8c", "technologies": ["node", "nextauth", "mongoose", "prisma", "socketio"] },
-    { "name": "Database", "color": "#a78bfa", "technologies": ["mongodb"] },
-    { "name": "External APIs", "color": "#f59e0b", "technologies": ["youtube", "cloudinary", "freesound"] },
-    { "name": "DevOps", "color": "#f87171", "technologies": ["vercel", "docker"] }
-  ],
-  "dataFlow": [
-    { "from": "Frontend", "to": "Backend", "description": "Requisições HTTP e WebSocket em tempo real", "method": "Fetch API · Socket.io" },
-    { "from": "Backend", "to": "Database", "description": "Operações CRUD com validação de schema", "method": "Mongoose · Prisma" },
-    { "from": "Backend", "to": "APIs Externas", "description": "Chamadas autenticadas para serviços externos", "method": "Axios · Node-fetch" },
-    { "from": "Frontend", "to": "Cloudinary", "description": "Upload direto de imagens via SDK", "method": "Fetch API · SDK" }
-  ]
+  "layers": {
+    "pt": [
+      { "name": "Frontend", "color": "#4f8ef7", "technologies": ["nextjs", "react", "typescript", "tailwind", "framer", "recharts", "toastify", "pwa", "socketio-client"] },
+      { "name": "Backend", "color": "#2ecf8c", "technologies": ["node", "nextauth", "mongoose", "prisma", "socketio"] },
+      { "name": "Database", "color": "#a78bfa", "technologies": ["mongodb"] },
+      { "name": "APIs Externas", "color": "#f59e0b", "technologies": ["youtube", "cloudinary", "freesound"] },
+      { "name": "DevOps", "color": "#f87171", "technologies": ["vercel", "docker"] }
+    ],
+    "en": [
+      { "name": "Frontend", "color": "#4f8ef7", "technologies": ["nextjs", "react", "typescript", "tailwind", "framer", "recharts", "toastify", "pwa", "socketio-client"] },
+      { "name": "Backend", "color": "#2ecf8c", "technologies": ["node", "nextauth", "mongoose", "prisma", "socketio"] },
+      { "name": "Database", "color": "#a78bfa", "technologies": ["mongodb"] },
+      { "name": "External APIs", "color": "#f59e0b", "technologies": ["youtube", "cloudinary", "freesound"] },
+      { "name": "DevOps", "color": "#f87171", "technologies": ["vercel", "docker"] }
+    ],
+    "fr": [
+      { "name": "Frontend", "color": "#4f8ef7", "technologies": ["nextjs", "react", "typescript", "tailwind", "framer", "recharts", "toastify", "pwa", "socketio-client"] },
+      { "name": "Backend", "color": "#2ecf8c", "technologies": ["node", "nextauth", "mongoose", "prisma", "socketio"] },
+      { "name": "Base de données", "color": "#a78bfa", "technologies": ["mongodb"] },
+      { "name": "API Externe", "color": "#f59e0b", "technologies": ["youtube", "cloudinary", "freesound"] },
+      { "name": "DevOps", "color": "#f87171", "technologies": ["vercel", "docker"] }
+    ]
+  },
+  "dataFlow": {
+    "pt": [
+      { "from": "Frontend", "to": "Backend", "description": "Requisições HTTP e WebSocket em tempo real", "method": "Fetch API · Socket.io" },
+      { "from": "Backend", "to": "Database", "description": "Operações CRUD com validação de schema", "method": "Mongoose · Prisma" },
+      { "from": "Backend", "to": "APIs Externas", "description": "Chamadas autenticadas para serviços externos", "method": "Axios · Node-fetch" },
+      { "from": "Frontend", "to": "Cloudinary", "description": "Upload direto de imagens via SDK", "method": "Fetch API · SDK" }
+    ],
+    "en": [
+      { "from": "Frontend", "to": "Backend", "description": "HTTP requests and real-time WebSocket", "method": "Fetch API · Socket.io" },
+      { "from": "Backend", "to": "Database", "description": "CRUD operations with schema validation", "method": "Mongoose · Prisma" },
+      { "from": "Backend", "to": "External APIs", "description": "Authenticated calls to external services", "method": "Axios · Node-fetch" },
+      { "from": "Frontend", "to": "Cloudinary", "description": "Direct image upload via SDK", "method": "Fetch API · SDK" }
+    ],
+    "fr": [
+      { "from": "Frontend", "to": "Backend", "description": "Requêtes HTTP et WebSocket en temps réel", "method": "Fetch API · Socket.io" },
+      { "from": "Backend", "to": "Base de données", "description": "Opérations CRUD avec validation de schéma", "method": "Mongoose · Prisma" },
+      { "from": "Backend", "to": "API Externe", "description": "Appels authentifiés aux services externes", "method": "Axios · Node-fetch" },
+      { "from": "Frontend", "to": "Cloudinary", "description": "Upload d'image directe via SDK", "method": "Fetch API · SDK" }
+    ]
+  }
 }
