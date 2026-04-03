@@ -41,6 +41,7 @@ class TechMap {
     this.dragStartClientX = 0;
     this.dragStartClientY = 0;
 
+    console.log('[TechMap.constructor] Criando TechMap...');
     this.initCanvas();
     this.setupEventListeners();
     this.loadData();

@@ -12,6 +12,9 @@ class LanguageManager {
     console.log(`[LanguageManager] allData recebido:`, allData);
     this.initLanguageButtons();
     this.updateLanguageButtons();
+    // Aplicar tradução inicial
+    console.log('[LanguageManager] Aplicando tradução inicial da página...');
+    this.applyLanguageToAllElements();
   }
 
   initLanguageButtons() {
