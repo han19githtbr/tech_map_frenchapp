@@ -33,10 +33,25 @@ class LanguageManager {
 
   changeLanguage(lang) {
     if (!['pt', 'en', 'fr'].includes(lang)) lang = 'pt';
+    if (this.currentLanguage === lang) return; // Não fiz nada se é o mesmo idioma
+    
     this.currentLanguage = lang;
     localStorage.setItem('techmap-lang', lang);
     this.updateLanguageButtons();
+    
+    // Se os dados ainda não carregaram, marca para aplicar quando chegarem
+    if (!this.data) {
+      this._pendingLanguageApply = true;
+      return;
+    }
+    
+    // Aplicar mudanças imediatamente
     this.applyLanguage();
+    
+    // Forçar re-render do TechMap
+    if (this.techMapInstance) {
+      this.techMapInstance.reloadWithLanguage(this.currentLanguage);
+    }
   }
 
   updateLanguageButtons() {
@@ -54,6 +69,11 @@ class LanguageManager {
   setData(data) {
     this.data = data;
     this.uiStrings = data.ui[this.currentLanguage];
+    // Se houve troca de idioma antes dos dados carregarem, aplica agora
+    if (this._pendingLanguageApply) {
+      this._pendingLanguageApply = false;
+      this.applyLanguage();
+    }
   }
 
   setTechMapInstance(instance) {
@@ -113,7 +133,8 @@ class LanguageManager {
   }
 
   applyLanguage() {
-    this.uiStrings = this.data.ui[this.currentLanguage];
+    // Atualizar strings de UI para o idioma selecionado
+    this.uiStrings = this.data.ui[this.currentLanguage] || this.data.ui['pt'];
 
     // Traduzir header/navigation
     this.translateHeader();
@@ -138,19 +159,21 @@ class LanguageManager {
 
     // Atualizar nomes de tecnologias visíveis
     this.updateTechCards();
-
-    // Se TechMap já foi inicializado, recarrega os dados
-    if (this.techMapInstance) {
-      this.techMapInstance.reloadWithLanguage(this.currentLanguage);
-    }
   }
 
   translateHeader() {
     // Traduzir links de navegação
+    const sectionKeyMap = {
+      '#map-section': 'mapa',
+      '#layers-section': 'camadas',
+      '#flow-section': 'fluxo',
+      '#overview-section': 'visaoGeral'
+    };
+
     document.querySelectorAll('.nav-link').forEach(link => {
       const section = link.dataset.section;
-      const key = section.replace('#', '').replace('-section', '');
-      if (this.uiStrings.header[key]) {
+      const key = sectionKeyMap[section];
+      if (key && this.uiStrings.header[key]) {
         link.textContent = this.uiStrings.header[key];
       }
     });
@@ -269,18 +292,23 @@ class LanguageManager {
   translateOverview() {
     const overviewCards = document.querySelectorAll('.overview-card');
     const cardData = [
-      { icon: 'frontendIcon', title: 'frontendTitle', content: 'frontend' },
-      { icon: 'backendIcon', title: 'backendTitle', content: 'backend' },
-      { icon: 'integracoesIcon', title: 'integracoesTitle', content: 'integracoes' },
-      { icon: 'devopsIcon', title: 'devopsTitle', content: 'devops' }
+      { title: 'frontendTitle', content: 'frontendContent' },
+      { title: 'backendTitle',  content: 'backendContent' },
+      { title: 'integracoesTitle', content: 'integracoesContent' },
+      { title: 'devopsTitle',  content: 'devopsContent' }
     ];
 
     overviewCards.forEach((card, idx) => {
-      if (cardData[idx]) {
-        const h3 = card.querySelector('h3');
-        if (h3) {
-          h3.textContent = this.uiStrings.overview[cardData[idx].title];
-        }
+      if (!cardData[idx]) return;
+
+      const h3 = card.querySelector('h3');
+      if (h3) {
+        h3.textContent = this.uiStrings.overview[cardData[idx].title];
+      }
+
+      const p = card.querySelector('p');
+      if (p && this.uiStrings.overview[cardData[idx].content]) {
+        p.innerHTML = this.uiStrings.overview[cardData[idx].content];
       }
     });
 
@@ -334,17 +362,13 @@ class LanguageManager {
   }
 
   getCategoryOrLegendName(name) {
-    const categoryMap = {
-      'Database': 'Database',
-      'External API': 'External API'
-    };
-    
-    // Tentar obter do categories primeiro
-    const categories = this.data.categories[this.currentLanguage] || [];
-    const found = categories.find(cat => cat === name);
-    if (found) return found;
-    
-    // Caso contrário, retornar o nome como está (Frontend, Backend, DevOps são iguais)
+    // Mapa de categoria canônica (EN/PT) → chave no array de categories do idioma
+    const canonicalIndex = ['Frontend', 'Backend', 'Database', 'External API', 'DevOps'];
+    const idx = canonicalIndex.indexOf(name);
+    if (idx !== -1) {
+      const categories = this.data.categories[this.currentLanguage] || [];
+      return categories[idx] || name;
+    }
     return name;
   }
 

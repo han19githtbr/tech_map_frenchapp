@@ -591,6 +591,9 @@ class TechMap {
     ctx.fillText(tech.icon, x, y);
 
     // ── Label ──
+    const langMgr = typeof languageManager !== 'undefined' ? languageManager : null;
+    const displayName = langMgr ? langMgr.getTechName(tech) : tech.name;
+
     const TARGET_PX = 13;
     const worldFontSize = Math.round(TARGET_PX / this.scale);
     const clampedFont = Math.max(10, Math.min(worldFontSize, 22));
@@ -603,7 +606,7 @@ class TechMap {
     const labelAlpha = isActive ? 1 : 0.8;
 
     // Background pill for readability
-    const metrics = ctx.measureText(tech.name);
+    const metrics = ctx.measureText(displayName);
     const pw = metrics.width + 10;
     const ph = clampedFont + 6;
     ctx.fillStyle = `rgba(11,14,26,0.72)`;
@@ -612,7 +615,7 @@ class TechMap {
     ctx.fill();
 
     ctx.fillStyle = isActive ? tech.color : `rgba(200,212,235,${labelAlpha})`;
-    ctx.fillText(tech.name, x, labelY + 1);
+    ctx.fillText(displayName, x, labelY + 1);
   }
 
   /* ─── Info Panel ─── */
@@ -652,8 +655,8 @@ class TechMap {
       })
       .join('');
 
-    const featuresLabel = langMgr ? 'Características' : 'Características';
-    const integratesLabel = langMgr ? 'Integra-se com' : 'Integra-se com';
+    const featuresLabel = langMgr ? langMgr.getUIString('panel.features') : 'Características';
+    const integratesLabel = langMgr ? langMgr.getUIString('panel.integrates') : 'Integra-se com';
 
     panel.innerHTML = `
       <div class="tech-detail">
@@ -684,17 +687,20 @@ class TechMap {
   }
 
   reloadWithLanguage(lang) {
-    // Update data from window.techMapData
-    if (window.techMapData) {
-      this.technologies = window.techMapData.technologies;
-      this.layers = window.techMapData.layers[lang] || window.techMapData.layers['pt'];
-      this.dataFlow = window.techMapData.dataFlow[lang] || window.techMapData.dataFlow['pt'];
+    // Update data from window.techMapData with the selected language
+    if (!window.techMapData) return;
 
-      // Re-render sections with new language
+    // Atualizar dados com o idioma selecionado
+    this.technologies = window.techMapData.technologies;
+    this.layers = window.techMapData.layers[lang] || window.techMapData.layers['pt'];
+    this.dataFlow = window.techMapData.dataFlow[lang] || window.techMapData.dataFlow['pt'];
+
+    // Re-render sections with new language
+    setTimeout(() => {
       this.renderLayers();
       this.renderDataFlow();
       this.renderInfoPanel(this.selectedTech);
-    }
+    }, 0);
   }
 
   /* ─── Layers Section ─── */
@@ -791,7 +797,15 @@ function animateCounters() {
 }
 
 /* ─── Init ─── */
-document.addEventListener('DOMContentLoaded', () => {
+function initTechMap() {
+  // Aguardar que o languageManager esteja pronto
+  if (typeof languageManager === 'undefined') {
+    setTimeout(initTechMap, 100);
+    return;
+  }
+  
   new TechMap();
   animateCounters();
-});
+}
+
+document.addEventListener('DOMContentLoaded', initTechMap);
