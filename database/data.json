@@ -597,21 +597,14 @@
         "legendaLabel": "Legenda"
       },
       "overview": {
-        "frontendIcon": "🎨",
-        "frontendTitle": "Frontend",
-        "backendIcon": "⚙️",
-        "backendTitle": "Backend",
-        "integracoesIcon": "🌐",
-        "integracoesTitle": "Integrações",
-        "devopsIcon": "🚀",
-        "devopsTitle": "DevOps",
-        "principaisIntegracoes": "Principais Integrações",
-        "frontendBackend": "Frontend ↔ Backend — HTTP (Fetch API) + WebSocket (Socket.io)",
-        "backendDatabase": "Backend ↔ Database — Mongoose ODM + Prisma ORM",
-        "backendApis": "Backend ↔ APIs Externas — Axios / Node-fetch",
-        "autenticacao": "Autenticação — NextAuth.js com OAuth Google",
-        "realtime": "Real-time — Socket.io para atualizações ao vivo",
-        "imagens": "Imagens — Cloudinary CDN com otimização automática"
+        "frontendContent": "Construído com <strong>React + Next.js 15</strong>, com animações via <strong>Framer Motion</strong> e estilização utilitária com <strong>TailwindCSS 4</strong>. Gráficos com <strong>Recharts</strong>, PWA via <strong>next-pwa</strong> e Socket.io para real-time.",
+        "backendContent": "Servidor <strong>Node.js</strong> com <strong>Next.js API Routes</strong>. Autenticação via <strong>NextAuth.js</strong> com OAuth Google. Banco de dados <strong>MongoDB</strong> acessado por <strong>Mongoose</strong> e <strong>Prisma</strong>.",
+        "integracoesContent": "<strong>YouTube API</strong> para vídeos educativos, <strong>Freesound</strong> para efeitos sonoros, <strong>Cloudinary</strong> para imagens e <strong>Google OAuth</strong> para autenticação.",
+        "devopsContent": "Deploy na <strong>Vercel</strong> com CI/CD automático e edge functions. <strong>Docker</strong> para containerização e consistência entre ambientes."
+      },
+      "panel": {
+        "features": "Características",
+        "integrates": "Integra-se com"
       },
       "footer": {
         "text": "Tech Map · Visualização interativa da arquitetura"
@@ -662,21 +655,14 @@
         "legendaLabel": "Legend"
       },
       "overview": {
-        "frontendIcon": "🎨",
-        "frontendTitle": "Frontend",
-        "backendIcon": "⚙️",
-        "backendTitle": "Backend",
-        "integracoesIcon": "🌐",
-        "integracoesTitle": "Integrations",
-        "devopsIcon": "🚀",
-        "devopsTitle": "DevOps",
-        "principaisIntegracoes": "Main Integrations",
-        "frontendBackend": "Frontend ↔ Backend — HTTP (Fetch API) + WebSocket (Socket.io)",
-        "backendDatabase": "Backend ↔ Database — Mongoose ODM + Prisma ORM",
-        "backendApis": "Backend ↔ External APIs — Axios / Node-fetch",
-        "autenticacao": "Authentication — NextAuth.js with OAuth Google",
-        "realtime": "Real-time — Socket.io for live updates",
-        "imagens": "Images — Cloudinary CDN with automatic optimization"
+        "frontendContent": "Built with <strong>React + Next.js 15</strong>, with animations via <strong>Framer Motion</strong> and utility styling with <strong>TailwindCSS 4</strong>. Charts with <strong>Recharts</strong>, PWA via <strong>next-pwa</strong> and Socket.io for real-time.",
+        "backendContent": "<strong>Node.js</strong> server with <strong>Next.js API Routes</strong>. Authentication via <strong>NextAuth.js</strong> with Google OAuth. <strong>MongoDB</strong> database accessed by <strong>Mongoose</strong> and <strong>Prisma</strong>.",
+        "integracoesContent": "<strong>YouTube API</strong> for educational videos, <strong>Freesound</strong> for sound effects, <strong>Cloudinary</strong> for images and <strong>Google OAuth</strong> for authentication.",
+        "devopsContent": "Deployed on <strong>Vercel</strong> with automatic CI/CD and edge functions. <strong>Docker</strong> for containerization and environment consistency."
+      },
+      "panel": {
+        "features": "Features",
+        "integrates": "Integrates with"
       },
       "footer": {
         "text": "Tech Map · Interactive architecture visualization"
@@ -727,21 +713,14 @@
         "legendaLabel": "Légende"
       },
       "overview": {
-        "frontendIcon": "🎨",
-        "frontendTitle": "Frontend",
-        "backendIcon": "⚙️",
-        "backendTitle": "Backend",
-        "integracoesIcon": "🌐",
-        "integracoesTitle": "Intégrations",
-        "devopsIcon": "🚀",
-        "devopsTitle": "DevOps",
-        "principaisIntegracoes": "Intégrations Principales",
-        "frontendBackend": "Frontend ↔ Backend — HTTP (Fetch API) + WebSocket (Socket.io)",
-        "backendDatabase": "Backend ↔ Base de données — Mongoose ODM + Prisma ORM",
-        "backendApis": "Backend ↔ API Externes — Axios / Node-fetch",
-        "autenticacao": "Authentification — NextAuth.js avec OAuth Google",
-        "realtime": "Temps réel — Socket.io pour les mises à jour en direct",
-        "imagens": "Images — Cloudinary CDN avec optimisation automatique"
+        "frontendContent": "Construit avec <strong>React + Next.js 15</strong>, avec des animations via <strong>Framer Motion</strong> et le style utilitaire avec <strong>TailwindCSS 4</strong>. Graphiques avec <strong>Recharts</strong>, PWA via <strong>next-pwa</strong> et Socket.io pour le temps réel.",
+        "backendContent": "Serveur <strong>Node.js</strong> avec <strong>Next.js API Routes</strong>. Authentification via <strong>NextAuth.js</strong> avec OAuth Google. Base de données <strong>MongoDB</strong> accessible par <strong>Mongoose</strong> et <strong>Prisma</strong>.",
+        "integracoesContent": "<strong>YouTube API</strong> pour les vidéos éducatives, <strong>Freesound</strong> pour les effets sonores, <strong>Cloudinary</strong> pour les images et <strong>Google OAuth</strong> pour l'authentification.",
+        "devopsContent": "Déployé sur <strong>Vercel</strong> avec CI/CD automatique et fonctions edge. <strong>Docker</strong> pour la containerisation et la cohérence entre environnements."
+      },
+      "panel": {
+        "features": "Caractéristiques",
+        "integrates": "S'intègre avec"
       },
       "footer": {
         "text": "Tech Map · Visualisation interactive de l'architecture"

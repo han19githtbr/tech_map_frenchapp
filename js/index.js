@@ -73,19 +73,42 @@ class TechMap {
 
   /* ─── Data Loading ─── */
   loadData() {
-    // Load data from JSON file
+    console.log('[TechMap.loadData] Carregando dados da aplicação...');
+    
+    // Se os dados já foram carregados em window.techMapData, use-os
+    if (window.techMapData && typeof languageManager !== 'undefined') {
+      console.log('[TechMap.loadData] ✓ Usando dados já carregados em window.techMapData');
+      const fullData = window.techMapData;
+      
+      this.technologies = fullData.technologies;
+      this.layers = fullData.layers[languageManager.currentLanguage] || fullData.layers['pt'];
+      this.dataFlow = fullData.dataFlow[languageManager.currentLanguage] || fullData.dataFlow['pt'];
+
+      // Informar language manager que TechMap está pronto
+      languageManager.setTechMapInstance(this);
+
+      this.computeLayout();
+      this.renderLayers();
+      this.renderDataFlow();
+      this.centerView();
+      this.startAnimation();
+      
+      console.log('[TechMap.loadData] ✓ TechMap carregado com sucesso');
+      return;
+    }
+
+    // Fallback: carregar dados se ainda não foram carregados (para compatibilidade)
+    console.log('[TechMap.loadData] Carregando data.json...');
     fetch('database/data.json')
       .then(response => response.json())
       .then(fullData => {
-        console.log('[TechMap.loadData] Dados carregados com sucesso');
-        // Store the full data for language manager
+        console.log('[TechMap.loadData] ✓ data.json carregado com sucesso');
         window.techMapData = fullData;
 
         this.technologies = fullData.technologies;
         this.layers = fullData.layers[languageManager.currentLanguage] || fullData.layers['pt'];
         this.dataFlow = fullData.dataFlow[languageManager.currentLanguage] || fullData.dataFlow['pt'];
 
-        // Set data to language manager
         languageManager.setData(fullData);
         languageManager.setTechMapInstance(this);
 
@@ -95,13 +118,10 @@ class TechMap {
         this.centerView();
         this.startAnimation();
 
-        // Apply language to the entire page
-        languageManager.applyLanguage();
-        console.log('[TechMap.loadData] Página inicializada com sucesso');
+        console.log('[TechMap.loadData] ✓ TechMap inicializado com sucesso');
       })
       .catch(err => {
-        console.error('[TechMap.loadData] Erro ao carregar data.json:', err);
-        // Fallback to embedded data
+        console.error('[TechMap.loadData] ✗ Erro ao carregar data.json:', err);
         this.loadEmbeddedData();
       });
   }
@@ -806,16 +826,33 @@ function animateCounters() {
 
 /* ─── Init ─── */
 function initTechMap() {
-  // Aguardar que o languageManager esteja pronto
-  if (typeof languageManager === 'undefined') {
-    console.log('[TechMap] Aguardando languageManager estar pronto...');
-    setTimeout(initTechMap, 100);
-    return;
-  }
+  console.log('[initTechMap] Iniciando carregamento de dados...');
   
-  console.log('[TechMap] LanguageManager está pronto. Inicializando TechMap...');
-  new TechMap();
-  animateCounters();
+  // Load data first
+  fetch('database/data.json')
+    .then(response => response.json())
+    .then(fullData => {
+      console.log('[initTechMap] ✓ data.json carregado com sucesso');
+      
+      // Store data globally
+      window.techMapData = fullData;
+      
+      // Create LanguageManager with data
+      console.log('[initTechMap] Criando LanguageManager com dados...');
+      window.languageManager = new LanguageManager(fullData);
+      console.log('[initTechMap] ✓ LanguageManager criado com sucesso');
+      
+      // Now create TechMap
+      console.log('[initTechMap] Criando TechMap...');
+      window.techMapInstance = new TechMap();
+      console.log('[initTechMap] ✓ TechMap criado com sucesso');
+      
+      animateCounters();
+      console.log('[initTechMap] ✓ INICIALIZAÇÃO CONCLUÍDA!');
+    })
+    .catch(err => {
+      console.error('[initTechMap] ✗ ERRO ao carregar data.json:', err);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', initTechMap);

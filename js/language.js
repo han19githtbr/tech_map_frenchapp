@@ -4,55 +4,62 @@
  */
 
 class LanguageManager {
-  constructor() {
+  constructor(allData) {
     this.currentLanguage = localStorage.getItem('techmap-lang') || 'pt';
-    this.data = null;
+    this.allData = allData || {};
     this.techMapInstance = null;
-    this.uiStrings = null;
+    console.log(`[LanguageManager] Inicializado com idioma: ${this.currentLanguage}`);
+    console.log(`[LanguageManager] allData recebido:`, allData);
     this.initLanguageButtons();
     this.updateLanguageButtons();
   }
 
   initLanguageButtons() {
+    console.log('[LanguageManager.initLanguageButtons] Inicializando botões de idioma...');
+    
     // Desktop language buttons
     const langBtns = document.querySelectorAll('.header-nav .lang-btn');
+    console.log(`[LanguageManager.initLanguageButtons] Encontrados ${langBtns.length} botões no header`);
+    
     langBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        this.changeLanguage(e.target.dataset.lang);
+        const lang = e.target.dataset.lang;
+        console.log(`[LanguageManager.initLanguageButtons] Desktop botão ${lang} clicado`);
+        this.changeLanguage(lang);
       });
     });
 
     // Mobile language buttons
     const mobileLangBtns = document.querySelectorAll('.language-selector-mobile .lang-btn');
+    console.log(`[LanguageManager.initLanguageButtons] Encontrados ${mobileLangBtns.length} botões mobile`);
+    
     mobileLangBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        this.changeLanguage(e.target.dataset.lang);
+        const lang = e.target.dataset.lang;
+        console.log(`[LanguageManager.initLanguageButtons] Mobile botão ${lang} clicado`);
+        this.changeLanguage(lang);
       });
     });
   }
 
   changeLanguage(lang) {
     if (!['pt', 'en', 'fr'].includes(lang)) lang = 'pt';
-    if (this.currentLanguage === lang) return; // Não fiz nada se é o mesmo idioma
+    if (this.currentLanguage === lang) {
+      console.log(`[LanguageManager.changeLanguage] Idioma já é ${lang}, ignorando`);
+      return;
+    }
     
-    console.log(`[LanguageManager] Mudando idioma para: ${lang}`);
+    console.log(`[LanguageManager.changeLanguage] *** MUDANDO IDIOMA PARA: ${lang} ***`);
     this.currentLanguage = lang;
     localStorage.setItem('techmap-lang', lang);
     this.updateLanguageButtons();
     
-    // Se os dados ainda não carregaram, marca para aplicar quando chegarem
-    if (!this.data) {
-      this._pendingLanguageApply = true;
-      console.log('[LanguageManager] Dados não carregados ainda. Marcando para aplicar depois.');
-      return;
-    }
-    
-    // Aplicar mudanças imediatamente
-    this.applyLanguage();
+    // Aplicar tradução IMEDIATAMENTE
+    this.applyLanguageToAllElements();
     
     // Forçar re-render do TechMap
     if (this.techMapInstance) {
-      console.log('[LanguageManager] Recarregando dados do TechMap com novo idioma');
+      console.log('[LanguageManager.changeLanguage] Recarregando TechMap com novo idioma');
       this.techMapInstance.reloadWithLanguage(this.currentLanguage);
     }
   }
@@ -70,22 +77,15 @@ class LanguageManager {
   }
 
   setData(data) {
-    console.log('[setData] Dados recebidos no LanguageManager');
-    this.data = data;
-    this.uiStrings = data.ui[this.currentLanguage];
-    console.log(`[setData] uiStrings setado para o idioma: ${this.currentLanguage}`);
-    console.log('[setData] this.uiStrings:', this.uiStrings);
-    
-    // Se houve troca de idioma antes dos dados carregarem, aplica agora
-    if (this._pendingLanguageApply) {
-      this._pendingLanguageApply = false;
-      console.log('[setData] Aplicando tradução pendente');
-      this.applyLanguage();
-    }
+    console.log('[LanguageManager.setData] Dados recebidos, atualizando allData');
+    this.allData = data;
+    console.log('[LanguageManager.setData] Aplicando tradução após receber dados');
+    this.applyLanguageToAllElements();
   }
 
   setTechMapInstance(instance) {
     this.techMapInstance = instance;
+    console.log('[LanguageManager.setTechMapInstance] TechMap instance setado');
   }
 
   getTechName(tech) {
@@ -140,45 +140,134 @@ class LanguageManager {
     return value || path;
   }
 
-  applyLanguage() {
-    // Atualizar strings de UI para o idioma selecionado
-    this.uiStrings = this.data.ui[this.currentLanguage] || this.data.ui['pt'];
+  applyLanguageToAllElements() {
+    const lang = this.currentLanguage;
+    console.log(`[applyLanguageToAllElements] Traduzindo página para ${lang}`);
     
-    console.log(`[applyLanguage] Traduzindo para: ${this.currentLanguage}`);
-    console.log(`[applyLanguage] this.data.ui disponível:`, this.data.ui);
-    console.log(`[applyLanguage] this.uiStrings:`, this.uiStrings);
-
-    // Se não conseguir encontrar as strings, interromper
-    if (!this.uiStrings) {
-      console.error('[applyLanguage] ERRO: uiStrings não encontrado!');
+    if (!this.allData || !this.allData.ui) {
+      console.error('[applyLanguageToAllElements] ERROR: this.allData.ui é null/undefined', { allData: this.allData });
       return;
     }
 
-    // Traduzir header/navigation
-    this.translateHeader();
+    const ui = this.allData.ui[lang];
+    if (!ui) {
+      console.error(`[applyLanguageToAllElements] ERROR: UI para idioma ${lang} não encontrada`);
+      console.log('[applyLanguageToAllElements] Idiomas disponíveis:', Object.keys(this.allData.ui));
+      return;
+    }
 
-    // Traduzir hero section
-    this.translateHero();
+    try {
+      // HEADER NAVIGATION
+      console.log('[applyLanguageToAllElements] → Traduzindo header...');
+      const navLinks = document.querySelectorAll('.nav-link');
+      console.log(`   Encontrados ${navLinks.length} nav-links`);
+      navLinks.forEach(link => {
+        const section = link.dataset.section;
+        if (section === '#map-section' && ui.header?.mapa) {
+          console.log(`   "${link.textContent}" → "${ui.header.mapa}"`);
+          link.textContent = ui.header.mapa;
+        }
+        if (section === '#layers-section' && ui.header?.camadas) {
+          link.textContent = ui.header.camadas;
+        }
+        if (section === '#flow-section' && ui.header?.fluxo) {
+          link.textContent = ui.header.fluxo;
+        }
+        if (section === '#overview-section' && ui.header?.visaoGeral) {
+          link.textContent = ui.header.visaoGeral;
+        }
+      });
+      
+      const backBtn = document.querySelector('.back-btn');
+      if (backBtn && ui.header?.voltar) {
+        backBtn.textContent = ui.header.voltar;
+      }
 
-    // Traduzir botões de filtro
-    this.translateControls();
+      // HERO SECTION
+      console.log('[applyLanguageToAllElements] → Traduzindo hero section...');
+      const heroBadge = document.querySelector('.hero-badge');
+      if (heroBadge && ui.hero?.badge) {
+        console.log(`   Badge: "${heroBadge.textContent}" → "${ui.hero.badge}"`);
+        heroBadge.textContent = ui.hero.badge;
+      }
+      
+      const h1 = document.querySelector('.hero h1');
+      if (h1 && ui.hero?.title) {
+        if (lang === 'en') {
+          h1.innerHTML = `${ui.hero.title}<br><em>${ui.hero.titleEmphasis}</em>`;
+        } else {
+          h1.innerHTML = `${ui.hero.titleEmphasis}<br><em>${ui.hero.title}</em>`;
+        }
+        console.log(`   H1 traduzido para ${lang}`);
+      }
+      
+      const heroPara = document.querySelector('.hero > p');
+      if (heroPara && ui.hero?.description) {
+        heroPara.textContent = ui.hero.description;
+      }
 
-    // Traduzir seções
-    this.translateSections();
+      // STATS
+      console.log('[applyLanguageToAllElements] → Traduzindo stats...');
+      const stats = document.querySelectorAll('.stat small');
+      if (stats[0] && ui.hero?.stats?.tecnologias) stats[0].textContent = ui.hero.stats.tecnologias;
+      if (stats[1] && ui.hero?.stats?.camadas) stats[1].textContent = ui.hero.stats.camadas;
+      if (stats[2] && ui.hero?.stats?.apisExternas) stats[2].textContent = ui.hero.stats.apisExternas;
+      if (stats[3] && ui.hero?.stats?.typescript) stats[3].textContent = ui.hero.stats.typescript;
 
-    // Traduzir overview cards
-    this.translateOverview();
+      // CONTROL BUTTONS
+      console.log('[applyLanguageToAllElements] → Traduzindo control buttons...');
+      document.querySelectorAll('.control-btn').forEach(btn => {
+        const category = btn.dataset.category;
+        let text = '';
+        if (category === 'all' && ui.controls?.todas) text = ui.controls.todas;
+        else if (category === 'Frontend' && ui.controls?.frontend) text = ui.controls.frontend;
+        else if (category === 'Backend' && ui.controls?.backend) text = ui.controls.backend;
+        else if (category === 'Database' && ui.controls?.database) text = ui.controls.database;
+        else if (category === 'External API' && ui.controls?.apisExternas) text = ui.controls.apisExternas;
+        else if (category === 'DevOps' && ui.controls?.devops) text = ui.controls.devops;
+        
+        if (text) {
+          const dot = btn.querySelector('.dot');
+          if (dot) {
+            btn.innerHTML = dot.outerHTML + text;
+          } else {
+            btn.textContent = text;
+          }
+        }
+      });
 
-    // Traduzir legenda
-    this.translateLegend();
+      // SECTIONS
+      console.log('[applyLanguageToAllElements] → Traduzindo sections...');
+      const sectionLabels = document.querySelectorAll('.section-label');
+      const sectionTitles = document.querySelectorAll('.section-title');
+      const sectionSubs = document.querySelectorAll('.section-sub');
+      
+      if (sectionLabels[0] && ui.sections?.mapaSectionLabel) sectionLabels[0].textContent = ui.sections.mapaSectionLabel;
+      if (sectionLabels[1] && ui.sections?.cama) sectionLabels[1].textContent = ui.sections.cama;
+      if (sectionLabels[2] && ui.sections?.fluxoLabel) sectionLabels[2].textContent = ui.sections.fluxoLabel;
+      if (sectionLabels[3] && ui.sections?.visaoLabel) sectionLabels[3].textContent = ui.sections.visaoLabel;
 
-    // Traduzir footer
-    this.translateFooter();
+      if (sectionTitles[0] && ui.sections?.camadasTitle) sectionTitles[0].textContent = ui.sections.camadasTitle;
+      if (sectionTitles[1] && ui.sections?.fluxoTitle) sectionTitles[1].textContent = ui.sections.fluxoTitle;
+      if (sectionTitles[2] && ui.sections?.visaoTitle) sectionTitles[2].textContent = ui.sections.visaoTitle;
 
-    // Atualizar nomes de tecnologias visíveis
-    this.updateTechCards();
-    
-    console.log(`[applyLanguage] Tradução completa para: ${this.currentLanguage}`);
+      if (sectionSubs[0] && ui.sections?.camadasSub) sectionSubs[0].textContent = ui.sections.camadasSub;
+      if (sectionSubs[1] && ui.sections?.fluxoSub) sectionSubs[1].textContent = ui.sections.fluxoSub;
+
+      // TOOLBAR
+      const toolbarHint = document.querySelector('.toolbar-hint');
+      if (toolbarHint && ui.sections?.mapaSectionHint) toolbarHint.textContent = ui.sections.mapaSectionHint;
+      
+      const resetBtn = document.querySelector('.reset-btn');
+      if (resetBtn && ui.sections?.mapaReset) resetBtn.textContent = ui.sections.mapaReset;
+      
+      const infoEmpty = document.querySelector('.info-empty p');
+      if (infoEmpty && ui.sections?.mapaEmpty) infoEmpty.textContent = ui.sections.mapaEmpty;
+
+      console.log('[applyLanguageToAllElements] ✓ TRADUÇÃO CONCLUÍDA COM SUCESSO!');
+    } catch (err) {
+      console.error('[applyLanguageToAllElements] ✗ ERRO DURANTE TRADUÇÃO:', err);
+    }
   }
 
   translateHeader() {
@@ -423,14 +512,4 @@ class LanguageManager {
   getCurrentLanguage() {
     return this.currentLanguage;
   }
-}
-
-// Inicializa o gerenciador de idiomas quando DOM estiver pronto
-let languageManager;
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    languageManager = new LanguageManager();
-  });
-} else {
-  languageManager = new LanguageManager();
 }
