@@ -464,7 +464,7 @@ class TechMap {
     loop();
   }
 
-  /* ─── Drawing ─── */
+  / ─── Drawing ─── */
   draw() {
     const ctx = this.ctx;
     const W = this.canvas.width;
@@ -472,8 +472,12 @@ class TechMap {
 
     // Debug: log once
     if (!this._drawLoggedOnce) {
-      console.log('[draw] Primeiro render - this.technologies.length:', this.technologies.length);
-      console.log('[draw] Canvas dimensions:', W, 'x', H);
+      console.log('[draw] ╔════════════════════════════════════════════════╗');
+      console.log('[draw] ║ PRIMEIRO RENDER - VERIFICAÇÃO DE DEBUG          ║');
+      console.log('[draw] ╠════════════════════════════════════════════════╣');
+      console.log(`[draw] ║ this.technologies.length: ${String(this.technologies.length).padEnd(28)}║`);
+      console.log(`[draw] ║ Canvas: ${W} x ${H}${' '.repeat(31)}║`);
+      console.log('[draw] ╚════════════════════════════════════════════════╝');
       this._drawLoggedOnce = true;
     }
 
