@@ -73,54 +73,62 @@ class TechMap {
 
   /* ─── Data Loading ─── */
   loadData() {
-    // Embed data directly so the page works without a server
+    // Load data from JSON file
+    fetch('database/data.json')
+      .then(response => response.json())
+      .then(fullData => {
+        // Store the full data for language manager
+        window.techMapData = fullData;
+
+        this.technologies = fullData.technologies;
+        this.layers = fullData.layers[languageManager.currentLanguage] || fullData.layers['pt'];
+        this.dataFlow = fullData.dataFlow[languageManager.currentLanguage] || fullData.dataFlow['pt'];
+
+        // Set data to language manager
+        languageManager.setData(fullData);
+        languageManager.setTechMapInstance(this);
+
+        this.computeLayout();
+        this.renderLayers();
+        this.renderDataFlow();
+        this.centerView();
+        this.startAnimation();
+
+        // Apply language to the entire page
+        languageManager.applyLanguage();
+      })
+      .catch(err => {
+        console.error('Error loading data.json:', err);
+        // Fallback to embedded data
+        this.loadEmbeddedData();
+      });
+  }
+
+  loadEmbeddedData() {
+    // Fallback embedded data (simplified version)
     const data = {
-      "technologies": [
-        { "id": "nextjs", "name": "Next.js", "category": "Frontend", "version": "15.2.4", "description": "Framework React com SSR (Server-Side Rendering - renderização no servidor), SSG (Static Site Generation - geração estática) e API Routes (funções serverless) integradas. Responsável pela renderização de páginas, roteamento automático baseado em arquivos, otimização de imagens, e execução de chamadas de API. Oferece PWA (Progressive Web App) para experiência app-like.", "features": ["SSR/SSG", "API Routes", "File Routing", "Image Optimization", "PWA"], "color": "#e2e8f0", "icon": "▲", "connects": ["react", "typescript", "tailwind", "vercel"] },
-        { "id": "react", "name": "React 18", "category": "Frontend", "version": "18.2.0", "description": "Biblioteca JavaScript para construir interfaces de usuário reativas com componentes reutilizáveis. Gerencia estado da aplicação, renderização eficiente com Virtual DOM (representação em memória da UI), e oferece Hooks para lógica funcional. Implementa atualizações automáticas quando dados mudam.", "features": ["Components", "Hooks", "State", "Virtual DOM"], "color": "#4f8ef7", "icon": "⚛", "connects": ["nextjs", "typescript", "framer", "recharts"] },
-        { "id": "typescript", "name": "TypeScript", "category": "Frontend", "version": "5.8.3", "description": "Superset tipado de JavaScript que adiciona verificação de tipos em tempo de desenvolvimento. Oferece type safety (segurança de tipos), interfaces reutilizáveis, generics para componentes flexíveis e compilador que transforma código TypeScript em JavaScript compatível. Reduz bugs e melhora a manutenibilidade do código.", "features": ["Type Safety", "Interfaces", "Generics", "Compiler"], "color": "#5b8dee", "icon": "T", "connects": ["nextjs", "node"] },
-        { "id": "tailwind", "name": "TailwindCSS", "category": "Frontend", "version": "4.1.3", "description": "Framework CSS com abordagem utility-first que fornece classes pré-definidas prontas para uso. Permite criar designs responsivos sem escrever CSS customizado, com suporte nativo para dark mode, temas personalizados, e breakpoints responsivos. Reduz tempo de desenvolvimento e melhora consistência visual.", "features": ["Utility-First", "Responsive", "Dark Mode", "Custom"], "color": "#38bdf8", "icon": "◈", "connects": ["nextjs"] },
-        { "id": "framer", "name": "Framer Motion", "category": "Frontend", "version": "12.11.3", "description": "Biblioteca de animação para React que simplifica criação de animações suaves, transições e interações. Oferece animações declarativas, detecção de gestos (swipe, hover), layout animations e variants reutilizáveis. Essencial para criar experiências de usuário fluidas e modernas.", "features": ["Animations", "Gestures", "Layout", "Variants"], "color": "#7c3aed", "icon": "◉", "connects": ["react"] },
-        { "id": "recharts", "name": "Recharts", "category": "Frontend", "version": "2.15.2", "description": "Biblioteca de gráficos compostos para React que permite visualições de dados responsivas. Oferece múltiplos tipos de gráficos (linha, barra, pizza), animações automáticas, temas customizáveis, e integração perfeita com React. Ideal para dashboards e análises de dados de jogadores.", "features": ["Charts", "Responsive", "Animations", "Themes"], "color": "#f59e0b", "icon": "◊", "connects": ["react"] },
-        { "id": "toastify", "name": "React Toastify", "category": "Frontend", "version": "11.0.5", "description": "Biblioteca para exibir notificações toast (pequenas mensagens flutuantes) na aplicação. Oferece tipos pré-definidos (sucesso, erro, aviso, informação), animações automáticas, posicionamento flexível e customização completa. Melhora feedback visual para ações do usuário.", "features": ["Notifications", "Animations", "Positioning", "Customizable"], "color": "#f97316", "icon": "◐", "connects": ["react"] },
-        { "id": "pwa", "name": "PWA (next-pwa)", "category": "Frontend", "version": "5.6.0", "description": "Progressive Web App (aplicação web progressiva) permite usar a aplicação como um app nativo. Utiliza Service Workers para cache offline, funciona sem conexão internet, pode ser instalada na home screen e suporta push notifications. Combina o melhor da web com apps nativos.", "features": ["Service Workers", "Offline", "Installable", "Push"], "color": "#a78bfa", "icon": "◻", "connects": ["nextjs"] },
-        { "id": "socketio-client", "name": "Socket.io Client", "category": "Frontend", "version": "4.8.1", "description": "Cliente Socket.io que estabelece comunicação bidirectional em tempo real com o servidor via WebSocket. Permite troca de eventos instantânea, reconexão automática em caso de desconexão, fallback para outras tecnologias se necessário. Essencial para funcionalidades live do jogo.", "features": ["Real-time", "WebSocket", "Reconnect", "Events"], "color": "#34d399", "icon": "⟶", "connects": ["nextjs", "socketio"] },
-        { "id": "node", "name": "Node.js", "category": "Backend", "version": "Runtime", "description": "Runtime JavaScript que executa código no servidor. Oferece event loop não-bloqueante, suporte nativo a async/await para operações assíncronas, sistema de módulos poderoso e streams para processamento de dados. Base de toda a infraestrutura backend da aplicação.", "features": ["Event Loop", "Async/Await", "Modules", "Streams"], "color": "#6ed97a", "icon": "⬡", "connects": ["nextjs", "typescript"] },
-        { "id": "nextauth", "name": "NextAuth.js", "category": "Backend", "version": "4.24.11", "description": "Solução de autenticação para Next.js que gerencia login de usuários. Suporta OAuth (autenticação via Google, GitHub, etc), JWT (JSON Web Tokens - tokens seguros para sessões), gerenciamento de sessões e cookies automático, e callbacks customizáveis para controle fino. Simplifica segurança de autenticação.", "features": ["OAuth", "JWT", "Sessions", "Callbacks"], "color": "#22d3ee", "icon": "◍", "connects": ["nextjs", "mongodb"] },
-        { "id": "mongoose", "name": "Mongoose", "category": "Backend", "version": "8.14.2", "description": "ODM (Object Document Mapping) para MongoDB que fornece camada abstrata sobre o banco de dados. Define schemas (estrutura dos documentos), valida dados automaticamente antes de salvar, oferece middleware hooks para operações, e simplifica queries complexas. Garante integridade dos dados.", "features": ["ODM", "Schema", "Validation", "Middleware"], "color": "#f87171", "icon": "◬", "connects": ["mongodb", "nextjs"] },
-        { "id": "prisma", "name": "Prisma ORM", "category": "Backend", "version": "6.8.0", "description": "ORM (Object-Relational Mapping) moderno e type-safe para acesso a banco de dados. Define modelos de dados, oferece query builder intuitivo, gerencia migrations automáticas, gera tipos TypeScript automaticamente, e fornece cliente Prisma com intellisense completo. Melhora produtividade e segurança.", "features": ["ORM", "Query Builder", "Migrations", "Type Safety"], "color": "#94a3b8", "icon": "▣", "connects": ["mongodb", "typescript"] },
-        { "id": "socketio", "name": "Socket.io Server", "category": "Backend", "version": "4.8.1", "description": "Servidor Socket.io que estabelece conexões WebSocket para comunicação em tempo real e bidirecional. Suporta rooms (agrupamento de clientes), broadcasting (envio para múltiplos clientes), fallback automático para outras tecnologias, e event-driven architecture. Essencial para multiplayer e atualizações live.", "features": ["Real-time", "WebSocket", "Fallback", "Rooms"], "color": "#2ecf8c", "icon": "⟵", "connects": ["nextjs", "node"] },
-        { "id": "mongodb", "name": "MongoDB", "category": "Database", "version": "6.16.0", "description": "Banco de dados NoSQL (Not Only SQL) que armazena dados em documentos JSON flexíveis. Suporta queries complexas, índices TTL (Time To Live) para expiração automática de dados, transações ACID, e escalabilidade horizontal. Escolha ideal para aplicações modernas com esquemas variáveis.", "features": ["NoSQL", "Documents", "TTL Indexes", "Transactions"], "color": "#a78bfa", "icon": "◈", "connects": ["mongoose", "prisma", "nextauth"] },
-        { "id": "youtube", "name": "YouTube API", "category": "External API", "version": "v3", "description": "API do Google que permite buscar e recuperar informações de vídeos do YouTube. Oferece pesquisa por palavras-chave, detalhes de vídeos, lista de trending, e metadados completos. Integra conteúdo educativo de francês diretamente na plataforma de aprendizado.", "features": ["Search", "Video Details", "Trending", "Metadata"], "color": "#f87171", "icon": "▶", "connects": ["nextjs"] },
-        { "id": "cloudinary", "name": "Cloudinary", "category": "External API", "version": "6.16.0", "description": "Serviço cloud para gerenciamento de imagens e mídia. Oferece upload de arquivos, otimização automática, armazenamento em CDN (Content Delivery Network - rede global de distribuição), transformações em tempo real (resize, crop, filtros), e aceleração de entrega. Melhora performance e experiência do usuário.", "features": ["Upload", "CDN", "Optimization", "Transforms"], "color": "#60a5fa", "icon": "☁", "connects": ["nextjs"] },
-        { "id": "freesound", "name": "Freesound API", "category": "External API", "version": "Custom", "description": "API de banco de dados de efeitos sonoros que permite buscar e baixar áudios licenciados. Oferece busca por palavras-chave, pré-visualização de áudio, metadados de qualidade, e licenças claras. Enriquece a experiência do jogo com sons de animais, ambientes e eventos interativos.", "features": ["Sound Search", "Caching", "TTL Index", "Preview"], "color": "#fb923c", "icon": "♪", "connects": ["nextjs", "mongodb"] },
-        { "id": "vercel", "name": "Vercel", "category": "DevOps", "version": "Cloud Platform", "description": "Plataforma cloud para deploy de aplicações Next.js. Oferece CI/CD automático (Continuous Integration/Continuous Deployment - integração contínua e deploy contínuo), edge functions para lógica distribuída globalmente, escalabilidade automática, analytics de performance, e preview deployments. Otimizada para Next.js com zero config.", "features": ["Deployment", "CI/CD", "Scalability", "Analytics"], "color": "#e2e8f0", "icon": "▲", "connects": ["nextjs"] },
-        { "id": "docker", "name": "Docker", "category": "DevOps", "version": "Containerization", "description": "Plataforma de containerização que empacota aplicação, dependências e configurações em containers isolados. Oferece consistência de ambiente entre desenvolvimento, testes e produção, facilita CI/CD pipelines, permite orquestração com Kubernetes, e simplifica deploy em múltiplos ambientes. Container é uma imagem portável e executável.", "features": ["Containers", "Images", "Networking", "Volumes"], "color": "#38bdf8", "icon": "⬢", "connects": ["nextjs"] }
-      ],
-      "layers": [
-        { "name": "Frontend", "color": "#4f8ef7", "technologies": ["nextjs", "react", "typescript", "tailwind", "framer", "recharts", "toastify", "pwa", "socketio-client"] },
-        { "name": "Backend", "color": "#2ecf8c", "technologies": ["node", "nextauth", "mongoose", "prisma", "socketio"] },
-        { "name": "Database", "color": "#a78bfa", "technologies": ["mongodb"] },
-        { "name": "External APIs", "color": "#f59e0b", "technologies": ["youtube", "cloudinary", "freesound"] },
-        { "name": "DevOps", "color": "#f87171", "technologies": ["vercel", "docker"] }
-      ],
-      "dataFlow": [
-        { "from": "Frontend", "to": "Backend", "description": "Requisições HTTP e WebSocket em tempo real", "method": "Fetch API · Socket.io" },
-        { "from": "Backend", "to": "Database", "description": "Operações CRUD com validação de schema", "method": "Mongoose · Prisma" },
-        { "from": "Backend", "to": "APIs Externas", "description": "Chamadas autenticadas para serviços externos", "method": "Axios · Node-fetch" },
-        { "from": "Frontend", "to": "Cloudinary", "description": "Upload direto de imagens via SDK", "method": "Fetch API · SDK" }
-      ]
+      "categories": {
+        "pt": ["Frontend", "Backend", "Database", "External API", "DevOps"],
+        "en": ["Frontend", "Backend", "Database", "External API", "DevOps"],
+        "fr": ["Frontend", "Backend", "Base de données", "API Externe", "DevOps"]
+      },
+      "technologies": [],
+      "layers": {
+        "pt": [
+          { "name": "Frontend", "color": "#4f8ef7", "technologies": ["nextjs", "react", "typescript", "tailwind", "framer", "recharts", "toastify", "pwa", "socketio-client"] },
+          { "name": "Backend", "color": "#2ecf8c", "technologies": ["node", "nextauth", "mongoose", "prisma", "socketio"] },
+          { "name": "Database", "color": "#a78bfa", "technologies": ["mongodb"] },
+          { "name": "APIs Externas", "color": "#f59e0b", "technologies": ["youtube", "cloudinary", "freesound"] },
+          { "name": "DevOps", "color": "#f87171", "technologies": ["vercel", "docker"] }
+        ]
+      }
     };
 
-    this.technologies = data.technologies;
-    this.layers = data.layers;
-    this.dataFlow = data.dataFlow;
-
-    this.computeLayout();
-    this.renderLayers();
-    this.renderDataFlow();
-    this.centerView();
-    this.startAnimation();
+    window.techMapData = data;
+    this.technologies = data.technologies || [];
+    this.layers = data.layers[languageManager.currentLanguage] || data.layers['pt'];
+    this.dataFlow = [];
+    languageManager.setData(data);
   }
 
   /* ─── Layout: radial clusters por categoria ─── */
@@ -610,12 +618,14 @@ class TechMap {
   /* ─── Info Panel ─── */
   renderInfoPanel(tech) {
     const panel = document.getElementById('infoPanel');
+    const langMgr = typeof languageManager !== 'undefined' ? languageManager : null;
 
     if (!tech) {
+      const emptyMessage = langMgr ? langMgr.getUIString('sections.mapaEmpty') : 'Clique em um nó no mapa para ver os detalhes da tecnologia';
       panel.innerHTML = `
         <div class="info-empty">
           <div class="info-empty-icon">◎</div>
-          <p>Clique em um nó no mapa para ver os detalhes da tecnologia</p>
+          <p>${emptyMessage}</p>
         </div>`;
       return;
     }
@@ -629,18 +639,28 @@ class TechMap {
     };
     const catColor = catColors[tech.category] || '#4f8ef7';
 
+    const techName = langMgr ? langMgr.getTechName(tech) : tech.name;
+    const techDesc = langMgr ? langMgr.getTechDescription(tech) : tech.description;
+    const techFeatures = langMgr ? langMgr.getTechFeatures(tech) : tech.features;
+
     const connects = tech.connects
       .map(id => this.technologies.find(t => t.id === id))
       .filter(Boolean)
-      .map(t => `<span class="connect-chip" style="color:${t.color};border-color:${t.color}40">${t.name}</span>`)
+      .map(t => {
+        const connectName = langMgr ? langMgr.getTechName(t) : t.name;
+        return `<span class="connect-chip" style="color:${t.color};border-color:${t.color}40">${connectName}</span>`;
+      })
       .join('');
+
+    const featuresLabel = langMgr ? 'Características' : 'Características';
+    const integratesLabel = langMgr ? 'Integra-se com' : 'Integra-se com';
 
     panel.innerHTML = `
       <div class="tech-detail">
         <div class="tech-detail-header">
           <div class="tech-detail-icon">${tech.icon}</div>
           <div>
-            <div class="tech-detail-name">${tech.name}</div>
+            <div class="tech-detail-name">${techName}</div>
             <div class="tech-detail-version">${tech.version}</div>
           </div>
         </div>
@@ -649,18 +669,32 @@ class TechMap {
           ${tech.category}
         </div>
 
-        <p class="tech-detail-desc">${tech.description}</p>
+        <p class="tech-detail-desc">${techDesc}</p>
 
-        <div class="tech-detail-label">Características</div>
+        <div class="tech-detail-label">${featuresLabel}</div>
         <div class="feature-tags">
-          ${tech.features.map(f => `<span class="feature-tag">${f}</span>`).join('')}
+          ${techFeatures.map(f => `<span class="feature-tag">${f}</span>`).join('')}
         </div>
 
         ${connects ? `
-          <div class="tech-detail-label" style="margin-top:1rem">Integra-se com</div>
+          <div class="tech-detail-label" style="margin-top:1rem">${integratesLabel}</div>
           <div class="connects-list">${connects}</div>
         ` : ''}
       </div>`;
+  }
+
+  reloadWithLanguage(lang) {
+    // Update data from window.techMapData
+    if (window.techMapData) {
+      this.technologies = window.techMapData.technologies;
+      this.layers = window.techMapData.layers[lang] || window.techMapData.layers['pt'];
+      this.dataFlow = window.techMapData.dataFlow[lang] || window.techMapData.dataFlow['pt'];
+
+      // Re-render sections with new language
+      this.renderLayers();
+      this.renderDataFlow();
+      this.renderInfoPanel(this.selectedTech);
+    }
   }
 
   /* ─── Layers Section ─── */
@@ -672,7 +706,11 @@ class TechMap {
       'Frontend': '#4f8ef7',
       'Backend': '#2ecf8c',
       'Database': '#a78bfa',
+      'Base de données': '#a78bfa',
       'External APIs': '#f59e0b',
+      'External API': '#f59e0b',
+      'API Externe': '#f59e0b',
+      'APIs Externas': '#f59e0b',
       'DevOps': '#f87171'
     };
 
@@ -680,7 +718,11 @@ class TechMap {
       'Frontend': '🎨',
       'Backend': '⚙️',
       'Database': '🗄️',
+      'Base de données': '🗄️',
       'External APIs': '🌐',
+      'External API': '🌐',
+      'API Externe': '🌐',
+      'APIs Externas': '🌐',
       'DevOps': '🚀'
     };
 
@@ -698,11 +740,15 @@ class TechMap {
             <span class="layer-count">${techs.length}</span>
           </h3>
           <div class="layer-techs">
-            ${techs.map(t => `
+            ${techs.map(t => {
+              const langMgr = typeof languageManager !== 'undefined' ? languageManager : null;
+              const techName = langMgr ? langMgr.getTechName(t) : t.name;
+              return `
               <span class="layer-tech-chip">
                 <span style="color:${t.color}">${t.icon}</span>
-                ${t.name}
-              </span>`).join('')}
+                ${techName}
+              </span>`;
+            }).join('')}
           </div>
         </div>`;
     }).join('');
@@ -713,15 +759,20 @@ class TechMap {
     const container = document.getElementById('flowItems');
     if (!container) return;
 
-    container.innerHTML = this.dataFlow.map(flow => `
+    const langMgr = typeof languageManager !== 'undefined' ? languageManager : null;
+
+    container.innerHTML = this.dataFlow.map(flow => {
+      const translatedFlow = langMgr ? langMgr.getDataFlowInfo(flow) : flow;
+      return `
       <div class="flow-item">
         <div class="flow-arrow-wrap">→</div>
         <div class="flow-content">
-          <div class="flow-from-to">${flow.from} → ${flow.to}</div>
-          <div class="flow-desc">${flow.description}</div>
-          <span class="flow-method-badge">${flow.method}</span>
+          <div class="flow-from-to">${translatedFlow.from} → ${translatedFlow.to}</div>
+          <div class="flow-desc">${translatedFlow.description}</div>
+          <span class="flow-method-badge">${translatedFlow.method}</span>
         </div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
 }
 

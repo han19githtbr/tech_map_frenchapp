@@ -550,5 +550,202 @@
       { "from": "Backend", "to": "API Externe", "description": "Appels authentifiés aux services externes", "method": "Axios · Node-fetch" },
       { "from": "Frontend", "to": "Cloudinary", "description": "Upload d'image directe via SDK", "method": "Fetch API · SDK" }
     ]
+  },
+  "ui": {
+    "pt": {
+      "header": {
+        "mapa": "Mapa",
+        "camadas": "Camadas",
+        "fluxo": "Fluxo",
+        "visaoGeral": "Visão Geral",
+        "voltar": "← Voltar",
+        "menu": "Menu"
+      },
+      "hero": {
+        "badge": "French Game · Arquitetura v1.0",
+        "title": "Stack Técnica",
+        "titleEmphasis": "Completa",
+        "description": "Explore todas as tecnologias, como se integram e o fluxo de dados da aplicação",
+        "stats": {
+          "tecnologias": "Tecnologias",
+          "camadas": "Camadas",
+          "apisExternas": "APIs Externas",
+          "typescript": "TypeScript"
+        }
+      },
+      "controls": {
+        "todas": "Todas",
+        "frontend": "Frontend",
+        "backend": "Backend",
+        "database": "Database",
+        "apisExternas": "APIs Externas",
+        "devops": "DevOps"
+      },
+      "sections": {
+        "mapaSectionLabel": "01 · Mapa Interativo",
+        "mapaSectionHint": "💡 Arraste · Scroll = zoom · Clique = detalhes",
+        "mapaReset": "↺ Resetar",
+        "mapaEmpty": "Clique em um nó no mapa para ver os detalhes da tecnologia",
+        "cama": "02 · Camadas",
+        "camadasTitle": "Arquitetura em Camadas",
+        "camadasSub": "Cada camada tem responsabilidades claras e se comunica com as adjacentes",
+        "fluxoLabel": "03 · Fluxo de Dados",
+        "fluxoTitle": "Como os Dados Fluem",
+        "fluxoSub": "O caminho dos dados entre os diferentes componentes e serviços",
+        "visaoLabel": "04 · Visão Geral",
+        "visaoTitle": "Sobre a Arquitetura",
+        "legendaLabel": "Legenda"
+      },
+      "overview": {
+        "frontendIcon": "🎨",
+        "frontendTitle": "Frontend",
+        "backendIcon": "⚙️",
+        "backendTitle": "Backend",
+        "integracoesIcon": "🌐",
+        "integracoesTitle": "Integrações",
+        "devopsIcon": "🚀",
+        "devopsTitle": "DevOps",
+        "principaisIntegracoes": "Principais Integrações",
+        "frontendBackend": "Frontend ↔ Backend — HTTP (Fetch API) + WebSocket (Socket.io)",
+        "backendDatabase": "Backend ↔ Database — Mongoose ODM + Prisma ORM",
+        "backendApis": "Backend ↔ APIs Externas — Axios / Node-fetch",
+        "autenticacao": "Autenticação — NextAuth.js com OAuth Google",
+        "realtime": "Real-time — Socket.io para atualizações ao vivo",
+        "imagens": "Imagens — Cloudinary CDN com otimização automática"
+      },
+      "footer": {
+        "text": "Tech Map · Visualização interativa da arquitetura"
+      }
+    },
+    "en": {
+      "header": {
+        "mapa": "Map",
+        "camadas": "Layers",
+        "fluxo": "Flow",
+        "visaoGeral": "Overview",
+        "voltar": "← Back",
+        "menu": "Menu"
+      },
+      "hero": {
+        "badge": "French Game · Architecture v1.0",
+        "title": "Complete",
+        "titleEmphasis": "Tech Stack",
+        "description": "Explore all technologies, how they integrate and the application's data flow",
+        "stats": {
+          "tecnologias": "Technologies",
+          "camadas": "Layers",
+          "apisExternas": "External APIs",
+          "typescript": "TypeScript"
+        }
+      },
+      "controls": {
+        "todas": "All",
+        "frontend": "Frontend",
+        "backend": "Backend",
+        "database": "Database",
+        "apisExternas": "External APIs",
+        "devops": "DevOps"
+      },
+      "sections": {
+        "mapaSectionLabel": "01 · Interactive Map",
+        "mapaSectionHint": "💡 Drag · Scroll = zoom · Click = details",
+        "mapaReset": "↺ Reset",
+        "mapaEmpty": "Click on a node in the map to see technology details",
+        "cama": "02 · Layers",
+        "camadasTitle": "Layered Architecture",
+        "camadasSub": "Each layer has clear responsibilities and communicates with adjacent ones",
+        "fluxoLabel": "03 · Data Flow",
+        "fluxoTitle": "How Data Flows",
+        "fluxoSub": "The path of data between different components and services",
+        "visaoLabel": "04 · Overview",
+        "visaoTitle": "About the Architecture",
+        "legendaLabel": "Legend"
+      },
+      "overview": {
+        "frontendIcon": "🎨",
+        "frontendTitle": "Frontend",
+        "backendIcon": "⚙️",
+        "backendTitle": "Backend",
+        "integracoesIcon": "🌐",
+        "integracoesTitle": "Integrations",
+        "devopsIcon": "🚀",
+        "devopsTitle": "DevOps",
+        "principaisIntegracoes": "Main Integrations",
+        "frontendBackend": "Frontend ↔ Backend — HTTP (Fetch API) + WebSocket (Socket.io)",
+        "backendDatabase": "Backend ↔ Database — Mongoose ODM + Prisma ORM",
+        "backendApis": "Backend ↔ External APIs — Axios / Node-fetch",
+        "autenticacao": "Authentication — NextAuth.js with OAuth Google",
+        "realtime": "Real-time — Socket.io for live updates",
+        "imagens": "Images — Cloudinary CDN with automatic optimization"
+      },
+      "footer": {
+        "text": "Tech Map · Interactive architecture visualization"
+      }
+    },
+    "fr": {
+      "header": {
+        "mapa": "Carte",
+        "camadas": "Couches",
+        "fluxo": "Flux",
+        "visaoGeral": "Aperçu",
+        "voltar": "← Retour",
+        "menu": "Menu"
+      },
+      "hero": {
+        "badge": "French Game · Architecture v1.0",
+        "title": "Stack Technique",
+        "titleEmphasis": "Complète",
+        "description": "Explorez toutes les technologies, comment elles s'intègrent et le flux de données de l'application",
+        "stats": {
+          "tecnologias": "Technologies",
+          "camadas": "Couches",
+          "apisExternas": "API Externes",
+          "typescript": "TypeScript"
+        }
+      },
+      "controls": {
+        "todas": "Toutes",
+        "frontend": "Frontend",
+        "backend": "Backend",
+        "database": "Base de données",
+        "apisExternas": "API Externes",
+        "devops": "DevOps"
+      },
+      "sections": {
+        "mapaSectionLabel": "01 · Carte Interactive",
+        "mapaSectionHint": "💡 Glisser · Scroll = zoom · Clic = détails",
+        "mapaReset": "↺ Réinitialiser",
+        "mapaEmpty": "Cliquez sur un nœud sur la carte pour voir les détails de la technologie",
+        "cama": "02 · Couches",
+        "camadasTitle": "Architecture en Couches",
+        "camadasSub": "Chaque couche a des responsabilités claires et communique avec les couches adjacentes",
+        "fluxoLabel": "03 · Flux de Données",
+        "fluxoTitle": "Comment les Données Circulent",
+        "fluxoSub": "Le chemin des données entre les différents composants et services",
+        "visaoLabel": "04 · Aperçu",
+        "visaoTitle": "À Propos de l'Architecture",
+        "legendaLabel": "Légende"
+      },
+      "overview": {
+        "frontendIcon": "🎨",
+        "frontendTitle": "Frontend",
+        "backendIcon": "⚙️",
+        "backendTitle": "Backend",
+        "integracoesIcon": "🌐",
+        "integracoesTitle": "Intégrations",
+        "devopsIcon": "🚀",
+        "devopsTitle": "DevOps",
+        "principaisIntegracoes": "Intégrations Principales",
+        "frontendBackend": "Frontend ↔ Backend — HTTP (Fetch API) + WebSocket (Socket.io)",
+        "backendDatabase": "Backend ↔ Base de données — Mongoose ODM + Prisma ORM",
+        "backendApis": "Backend ↔ API Externes — Axios / Node-fetch",
+        "autenticacao": "Authentification — NextAuth.js avec OAuth Google",
+        "realtime": "Temps réel — Socket.io pour les mises à jour en direct",
+        "imagens": "Images — Cloudinary CDN avec optimisation automatique"
+      },
+      "footer": {
+        "text": "Tech Map · Visualisation interactive de l'architecture"
+      }
+    }
   }
 }
