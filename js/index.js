@@ -464,7 +464,7 @@ class TechMap {
     loop();
   }
 
-  / ─── Drawing ─── */
+  /* ─── Drawing ─── */
   draw() {
     const ctx = this.ctx;
     const W = this.canvas.width;
