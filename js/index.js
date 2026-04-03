@@ -77,6 +77,7 @@ class TechMap {
     fetch('database/data.json')
       .then(response => response.json())
       .then(fullData => {
+        console.log('[TechMap.loadData] Dados carregados com sucesso');
         // Store the full data for language manager
         window.techMapData = fullData;
 
@@ -96,9 +97,10 @@ class TechMap {
 
         // Apply language to the entire page
         languageManager.applyLanguage();
+        console.log('[TechMap.loadData] Página inicializada com sucesso');
       })
       .catch(err => {
-        console.error('Error loading data.json:', err);
+        console.error('[TechMap.loadData] Erro ao carregar data.json:', err);
         // Fallback to embedded data
         this.loadEmbeddedData();
       });
@@ -688,7 +690,12 @@ class TechMap {
 
   reloadWithLanguage(lang) {
     // Update data from window.techMapData with the selected language
-    if (!window.techMapData) return;
+    if (!window.techMapData) {
+      console.warn('[TechMap.reloadWithLanguage] window.techMapData não disponível');
+      return;
+    }
+
+    console.log(`[TechMap.reloadWithLanguage] Recarregando dados para o idioma: ${lang}`);
 
     // Atualizar dados com o idioma selecionado
     this.technologies = window.techMapData.technologies;
@@ -700,6 +707,7 @@ class TechMap {
       this.renderLayers();
       this.renderDataFlow();
       this.renderInfoPanel(this.selectedTech);
+      console.log(`[TechMap.reloadWithLanguage] Re-render completo para ${lang}`);
     }, 0);
   }
 
@@ -800,10 +808,12 @@ function animateCounters() {
 function initTechMap() {
   // Aguardar que o languageManager esteja pronto
   if (typeof languageManager === 'undefined') {
+    console.log('[TechMap] Aguardando languageManager estar pronto...');
     setTimeout(initTechMap, 100);
     return;
   }
   
+  console.log('[TechMap] LanguageManager está pronto. Inicializando TechMap...');
   new TechMap();
   animateCounters();
 }

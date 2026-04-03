@@ -35,6 +35,7 @@ class LanguageManager {
     if (!['pt', 'en', 'fr'].includes(lang)) lang = 'pt';
     if (this.currentLanguage === lang) return; // Não fiz nada se é o mesmo idioma
     
+    console.log(`[LanguageManager] Mudando idioma para: ${lang}`);
     this.currentLanguage = lang;
     localStorage.setItem('techmap-lang', lang);
     this.updateLanguageButtons();
@@ -42,6 +43,7 @@ class LanguageManager {
     // Se os dados ainda não carregaram, marca para aplicar quando chegarem
     if (!this.data) {
       this._pendingLanguageApply = true;
+      console.log('[LanguageManager] Dados não carregados ainda. Marcando para aplicar depois.');
       return;
     }
     
@@ -50,6 +52,7 @@ class LanguageManager {
     
     // Forçar re-render do TechMap
     if (this.techMapInstance) {
+      console.log('[LanguageManager] Recarregando dados do TechMap com novo idioma');
       this.techMapInstance.reloadWithLanguage(this.currentLanguage);
     }
   }
