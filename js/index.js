@@ -73,21 +73,30 @@ class TechMap {
 
   /* ─── Data Loading ─── */
   loadData() {
-    console.log('[TechMap.loadData] Carregando dados da aplicação...');
+    console.log('[TechMap.loadData] Iniciando carregamento de dados...');
+    console.log('[TechMap.loadData] window.techMapData disponível:', !!window.techMapData);
+    console.log('[TechMap.loadData] window.languageManager disponível:', !!window.languageManager);
     
     // Se os dados já foram carregados em window.techMapData, use-os
-    if (window.techMapData && typeof languageManager !== 'undefined') {
-      console.log('[TechMap.loadData] ✓ Usando dados já carregados em window.techMapData');
+    if (window.techMapData && window.languageManager) {
+      console.log('[TechMap.loadData] ✓ Usando dados pré-carregados');
       const fullData = window.techMapData;
+      const langMgr = window.languageManager;
       
-      this.technologies = fullData.technologies;
-      this.layers = fullData.layers[languageManager.currentLanguage] || fullData.layers['pt'];
-      this.dataFlow = fullData.dataFlow[languageManager.currentLanguage] || fullData.dataFlow['pt'];
+      console.log('[TechMap.loadData] Configurando technologies...');
+      this.technologies = fullData.technologies || [];
+      console.log(`[TechMap.loadData] ${this.technologies.length} tecnologias carregadas`);
+      
+      this.layers = fullData.layers[langMgr.currentLanguage] || fullData.layers['pt'];
+      this.dataFlow = fullData.dataFlow[langMgr.currentLanguage] || fullData.dataFlow['pt'];
 
       // Informar language manager que TechMap está pronto
-      languageManager.setTechMapInstance(this);
+      langMgr.setTechMapInstance(this);
 
+      console.log('[TechMap.loadData] Computando layout...');
       this.computeLayout();
+      
+      console.log('[TechMap.loadData] Renderizando...');
       this.renderLayers();
       this.renderDataFlow();
       this.centerView();
@@ -96,23 +105,35 @@ class TechMap {
       console.log('[TechMap.loadData] ✓ TechMap carregado com sucesso');
       return;
     }
+    
+    console.log('[TechMap.loadData] ✗ Dados pré-carregados não encontrados, usando fallback...');
 
     // Fallback: carregar dados se ainda não foram carregados (para compatibilidade)
-    console.log('[TechMap.loadData] Carregando data.json...');
+    console.log('[TechMap.loadData] Carregando data.json por fallback...');
     fetch('database/data.json')
       .then(response => response.json())
       .then(fullData => {
         console.log('[TechMap.loadData] ✓ data.json carregado com sucesso');
         window.techMapData = fullData;
 
-        this.technologies = fullData.technologies;
-        this.layers = fullData.layers[languageManager.currentLanguage] || fullData.layers['pt'];
-        this.dataFlow = fullData.dataFlow[languageManager.currentLanguage] || fullData.dataFlow['pt'];
+        this.technologies = fullData.technologies || [];
+        console.log(`[TechMap.loadData] ${this.technologies.length} tecnologias carregadas`);
+        
+        const langMgr = window.languageManager || {};
+        const currentLang = langMgr.currentLanguage || 'pt';
+        
+        this.layers = fullData.layers[currentLang] || fullData.layers['pt'];
+        this.dataFlow = fullData.dataFlow[currentLang] || fullData.dataFlow['pt'];
 
-        languageManager.setData(fullData);
-        languageManager.setTechMapInstance(this);
+        if (window.languageManager) {
+          window.languageManager.setData(fullData);
+          window.languageManager.setTechMapInstance(this);
+        }
 
+        console.log('[TechMap.loadData] Computando layout...');
         this.computeLayout();
+        
+        console.log('[TechMap.loadData] Renderizando...');
         this.renderLayers();
         this.renderDataFlow();
         this.centerView();
@@ -155,6 +176,7 @@ class TechMap {
 
   /* ─── Layout: radial clusters por categoria ─── */
   computeLayout() {
+    console.log('[computeLayout] Iniciando... this.technologies.length:', this.technologies.length);
     const categories = ['Frontend', 'Backend', 'Database', 'External API', 'DevOps'];
     const groups = {};
 
@@ -164,6 +186,8 @@ class TechMap {
       if (!groups[cat]) groups[cat] = [];
       groups[cat].push(t);
     });
+
+    console.log('[computeLayout] Grupos criados:', Object.keys(groups).map(k => `${k}: ${groups[k].length}`).join(', '));
 
     // Scale the entire world-space layout based on canvas dimensions.
     // This means the map always fits comfortably regardless of screen size —
@@ -209,6 +233,8 @@ class TechMap {
         tech.hidden = false;
       });
     });
+    
+    console.log('[computeLayout] ✓ Layout computado. Nós posicionados:', this.technologies.filter(t => !t.hidden).length);
   }
 
   centerView() {
@@ -443,6 +469,13 @@ class TechMap {
     const W = this.canvas.width;
     const H = this.canvas.height;
 
+    // Debug: log once
+    if (!this._drawLoggedOnce) {
+      console.log('[draw] Primeiro render - this.technologies.length:', this.technologies.length);
+      console.log('[draw] Canvas dimensions:', W, 'x', H);
+      this._drawLoggedOnce = true;
+    }
+
     // Background
     ctx.fillStyle = '#0b0e1a';
     ctx.fillRect(0, 0, W, H);
@@ -534,8 +567,12 @@ class TechMap {
   }
 
   drawNodes(ctx) {
-    this.technologies.forEach(tech => {
-      if (tech.hidden) return;
+    const visibleTechs = this.technologies.filter(t => !t.hidden);
+    if (!this._nodesLoggedOnce) {
+      console.log('[drawNodes] Tecnologias visíveis:', visibleTechs.length, 'de', this.technologies.length);
+      this._nodesLoggedOnce = true;
+    }
+    visibleTechs.forEach(tech => {
       this.drawNode(ctx, tech);
     });
   }
